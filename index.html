@@ -1,0 +1,1643 @@
+
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>VIZHU — бриф для аккаунтов</title>
+<style>
+:root{
+  --bg:#0b100d;
+  --bg2:#121914;
+  --panel:#121a15;
+  --panel2:#0f1511;
+  --line:rgba(255,255,255,.08);
+  --line2:rgba(199,245,93,.22);
+  --text:#f4f7f3;
+  --muted:#99a69b;
+  --lime:#c7f55d;
+  --lime2:#d7ff7f;
+  --warn:#ffd56f;
+  --ok:#7de0a8;
+  --danger:#ff8d8d;
+  --shadow:0 20px 60px rgba(0,0,0,.34);
+  --radius:24px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:radial-gradient(circle at top left,#162019 0,#0d120f 45%,#070908 100%);color:var(--text);font:14px/1.45 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+textarea{resize:vertical}
+.app{max-width:1600px;margin:0 auto;padding:18px}
+.panel{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015));border:1px solid var(--line);border-radius:28px;box-shadow:var(--shadow)}
+.hero{padding:24px;display:grid;grid-template-columns:1.25fr .75fr;gap:18px;align-items:start}
+.heroMain{display:grid;grid-template-columns:minmax(260px,320px) 1fr;gap:18px;align-items:center}
+.brandLogo{background:#0b0f0c;border:1px solid var(--line);border-radius:26px;padding:18px 22px;display:flex;align-items:center;justify-content:center;min-height:128px;overflow:visible;aspect-ratio:673/241}
+.brandLogo img{display:block;width:100%;height:auto;max-width:100%;object-fit:contain;object-position:center;image-rendering:auto;flex:0 0 auto}
+.heroCopy{min-width:0}
+.hero h1{margin:0 0 8px;font-size:30px;letter-spacing:.02em}
+.hero p{margin:0;color:var(--muted);max-width:900px}
+.pillRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.pill{display:inline-flex;align-items:center;padding:7px 10px;border-radius:999px;border:1px solid var(--line2);background:rgba(199,245,93,.08);color:var(--lime);font-size:12px}
+.heroSide{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.kpi{padding:14px;border:1px solid var(--line);background:rgba(255,255,255,.02);border-radius:18px}
+.kpi .label{font-size:12px;color:var(--muted);margin-bottom:8px}
+.kpi .value{font-size:26px;font-weight:800;letter-spacing:.02em}
+.kpi .sub{font-size:12px;color:var(--muted);margin-top:4px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.btn{appearance:none;border:none;border-radius:16px;padding:12px 14px;font-weight:800;transition:.18s transform,.18s opacity,.18s background;white-space:nowrap}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:var(--lime);color:#0c110d}
+.btn.ghost{background:#121814;color:var(--text);border:1px solid var(--line)}
+.btn.warn{background:#231f12;color:#ffe199;border:1px solid rgba(255,213,111,.18)}
+.btn.danger{background:#2a1616;color:#ffb2b2;border:1px solid rgba(255,126,126,.18)}
+.status{padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:#0d120f;color:var(--muted);min-height:44px;display:flex;align-items:center}
+.status.ok{border-color:rgba(126,224,168,.22);color:var(--ok)}
+.status.warn{border-color:rgba(255,213,111,.22);color:#ffe199}
+.status.info{border-color:rgba(199,245,93,.18);color:var(--text)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 430px;gap:14px;align-items:start}
+.stack{display:grid;gap:14px}
+.sticky{position:sticky;top:12px}
+.panelBody{padding:18px}
+.sectionHead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+h2{margin:0;font-size:20px}
+h3{margin:0;font-size:16px}
+.note{padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.025);border:1px solid var(--line);color:var(--muted)}
+.small{font-size:12px}
+.row2,.row3,.row4{display:grid;gap:10px}
+.row2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.row3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.row4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.field{margin-bottom:12px}
+.field label{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;background:#0b100d;color:var(--text);border:1px solid var(--line);border-radius:14px;padding:11px 13px;outline:none}
+.field textarea{min-height:88px}
+.chipGroup{display:flex;flex-wrap:wrap;gap:8px}
+.chipCheck{display:inline-flex;align-items:center;gap:8px;padding:9px 12px;border-radius:999px;border:1px solid var(--line);background:#0b100d;color:var(--text);user-select:none}
+.chipCheck input{accent-color:var(--lime)}
+.hr{border:none;border-top:1px solid var(--line);margin:14px 0}
+.zoneList{display:grid;gap:12px}
+.zoneCard{border:1px solid var(--line);background:#0b100d;border-radius:22px;padding:14px}
+.zoneHead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap}
+.zoneName{font-size:16px;font-weight:800}
+.zoneMeta{margin-top:10px;padding:12px;border-radius:16px;border:1px solid rgba(199,245,93,.16);background:rgba(199,245,93,.05)}
+.metaLine{margin-bottom:6px}
+.tagRow{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.tag{font-size:11px;padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--muted)}
+.tag.ok{color:var(--ok);border-color:rgba(126,224,168,.22);background:rgba(126,224,168,.08)}
+.tag.warn{color:#ffd78f;border-color:rgba(255,215,143,.22);background:rgba(255,215,143,.08)}
+.tag.lime{color:var(--lime);border-color:rgba(199,245,93,.24);background:rgba(199,245,93,.08)}
+.previewWrap{display:grid;gap:12px}
+.previewCard{padding:14px;border-radius:18px;border:1px solid var(--line);background:#0b100d}
+.previewCard textarea{min-height:160px;background:#0f1411}
+.previewList{display:grid;gap:10px}
+.previewItem{padding:12px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.02)}
+.kpiGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.callout{padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.025)}
+.callout.warn{border-color:rgba(255,213,111,.18);background:rgba(255,213,111,.06)}
+.callout.ok{border-color:rgba(126,224,168,.18);background:rgba(126,224,168,.06)}
+.list{margin:0;padding-left:18px}
+.list li{margin:4px 0}
+.footerNote{font-size:12px;color:var(--muted)}
+@media (max-width:1220px){
+  .layout{grid-template-columns:1fr}
+  .sticky{position:static}
+}
+@media (max-width:980px){
+  .hero{grid-template-columns:1fr}
+  .heroMain,.heroSide,.row2,.row3,.row4,.kpiGrid{grid-template-columns:1fr}
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
+</head>
+<body>
+<div class="app">
+  <section class="panel hero">
+  <div class="heroMain">
+    <div class="brandLogo"><img id="heroLogoImg" alt="VIZHU"></div>
+    <div class="heroCopy">
+      <h1>VIZHU · бриф для аккаунтов</h1>
+      <p>Нетехническая форма для сбора информации от заказчика. На выходе — нормализованный Excel и JSON в структуре, близкой к вашему пресейл-конфигуратору: паспорт проекта, зоны, задачи, сервисные флаги, открытые вопросы и допущения для ИТО.</p>
+      <div class="pillRow">
+        <span class="pill">Аккаунт → бриф → ИТО</span>
+        <span class="pill">Язык без технарщины</span>
+        <span class="pill">Excel + JSON</span>
+        <span class="pill">Структура совместима с v10</span>
+      </div>
+    </div>
+  </div>
+  <div class="heroSide">
+    <div class="kpi"><div class="label">Что собираем</div><div class="value" id="heroZones">0</div><div class="sub">зон в брифе</div></div>
+    <div class="kpi"><div class="label">Готовность</div><div class="value" id="heroCompleteness">0%</div><div class="sub">качество заполнения</div></div>
+    <div class="kpi"><div class="label">Открытые вопросы</div><div class="value" id="heroQuestions">0</div><div class="sub">что ИТО уточнит</div></div>
+    <div class="kpi"><div class="label">Глобальные флаги</div><div class="value" id="heroFlags">—</div><div class="sub">монтаж / ПНР / контент / металл / доставка</div></div>
+  </div>
+</section>
+
+  <div class="toolbar">
+    <button class="btn ghost" id="saveLocalBtn" type="button">Сохранить черновик</button>
+    <button class="btn ghost" id="loadLocalBtn" type="button">Загрузить черновик</button>
+    <button class="btn ghost" id="importJsonBtn" type="button">Открыть JSON</button>
+    <button class="btn ghost" id="exportBriefJsonBtn" type="button">Скачать JSON брифа</button>
+    <button class="btn ghost" id="exportConfiguratorJsonBtn" type="button">Скачать JSON для конфигуратора</button>
+    <button class="btn primary" id="exportExcelBtn" type="button">Скачать Excel</button>
+    <button class="btn warn" id="copySummaryBtn" type="button">Скопировать инженерное резюме</button>
+  </div>
+
+  <div id="statusLine" class="status info">Форма готова. Заполните паспорт проекта, добавьте зоны и выгрузите бриф для ИТО.</div>
+
+  <div class="layout">
+    <main class="stack">
+      <section class="panel">
+        <div class="panelBody">
+          <div class="sectionHead"><h2>1. Паспорт проекта</h2><span class="tag lime">поля уровня проекта</span></div>
+          <div class="row2">
+            <div class="field"><label>Название проекта</label><input id="projectName" placeholder="Например: Visitor center / новый офис / showroom"></div>
+            <div class="field"><label>Заказчик</label><input id="customerName" placeholder="Компания / учреждение"></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label>Аккаунт-менеджер</label><input id="accountManager" placeholder="Кто ведёт сделку"></div>
+            <div class="field"><label>Контакт заказчика</label><input id="customerContact" placeholder="ФИО / роль / телефон / email"></div>
+          </div>
+          <div class="row3">
+            <div class="field"><label>Тип проекта</label><select id="projectType"></select></div>
+            <div class="field"><label>Ожидаемый уровень решения</label><select id="scenario"></select></div>
+            <div class="field"><label>Город / логистика</label><select id="cityTier"></select></div>
+          </div>
+          <div class="row3">
+            <div class="field"><label>Срочность</label><select id="urgency"></select></div>
+            <div class="field"><label>Желаемая дата запуска</label><input id="deadline" type="date"></div>
+            <div class="field"><label>Целевая цена для клиента, ₽</label><input id="targetBudget" type="number" min="0" step="10000" placeholder="Если известна"></div>
+          </div>
+          <div class="row3">
+            <div class="field"><label>Общая площадь объекта, м²</label><input id="projectArea" type="number" min="0" step="1" placeholder="Если известна"></div>
+            <div class="field"><label>Средняя высота потолков, м</label><input id="ceilingHeight" type="number" min="0" step="0.1" placeholder="Если известна"></div>
+            <div class="field"><label>Количество этажей</label><input id="floors" type="number" min="1" step="1" value="1"></div>
+          </div>
+          <div class="row2">
+            <div class="field"><label>Город объекта</label><input id="objectCity" placeholder="Например: Москва / Казань / Новосибирск"></div>
+            <div class="field"><label>Адрес / площадка</label><input id="objectAddress" placeholder="Если известен адрес или название площадки"></div>
+          </div>
+          <div class="note small">Эти поля мапятся в поля configurator: <b>projectType</b>, <b>scenario</b>, <b>cityTier</b>, <b>urgency</b>, <b>projectArea</b>, <b>ceilingHeight</b>, <b>floors</b>, <b>targetBudget</b>.</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panelBody">
+          <div class="sectionHead"><h2>2. Что важно клиенту</h2><span class="tag">смысл сделки и ограничения</span></div>
+          <div class="field"><label>Что клиент хочет получить в результате</label><textarea id="businessGoal" placeholder="Коротко по-человечески: для чего вообще проект, что должно измениться после запуска"></textarea></div>
+          <div class="field"><label>Что для клиента будет считаться успехом</label><textarea id="successCriteria" placeholder="Например: вау-эффект для гостей, простое управление без оператора, гибридные встречи без жалоб на звук, быстрый запуск..."></textarea></div>
+          <div class="row2">
+            <div class="field"><label>Кто принимает решение / согласует</label><textarea id="decisionMaker" placeholder="ЛПР, служба эксплуатации, IT, маркетинг, безопасность и т.д."></textarea></div>
+            <div class="field"><label>Что уже есть у заказчика</label><textarea id="existingEquipment" placeholder="Существующие дисплеи, кабельная инфраструктура, мебель, стойки, AV/IT-системы, CMS и т.д."></textarea></div>
+          </div>
+          <div class="field"><label>Что для клиента критично</label><div class="chipGroup" id="decisionDriversGroup"></div></div>
+          <div class="field"><label>Интеграции / платформы / внешние системы</label><div class="chipGroup" id="integrationsGroup"></div></div>
+          <div class="row2">
+            <div class="field"><label>Предпочтения по брендам</label><textarea id="brandPreferences" placeholder="Если клиент просит определённые бренды / классы решений"></textarea></div>
+            <div class="field"><label>Нежелательные бренды / ограничения</label><textarea id="forbiddenBrands" placeholder="Если есть стоп-лист, импортозамещение, white-list, security policy"></textarea></div>
+          </div>
+          <div class="field"><label>Общий комментарий аккаунта</label><textarea id="projectNotes" placeholder="Нюансы сделки, политика на объекте, ожидания по монтажу, чувствительность к срокам, конкуренты и всё важное для ИТО"></textarea></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panelBody">
+          <div class="sectionHead"><h2>3. Какие работы ожидаются</h2><span class="tag">глобальные сервисные флаги</span></div>
+          <div class="row2">
+            <div class="field"><label>Поставка оборудования</label><select id="serviceDelivery"></select></div>
+            <div class="field"><label>Монтаж на площадке</label><select id="serviceInstall"></select></div>
+          </div>
+          <div class="row3">
+            <div class="field"><label>Настройка / ввод в эксплуатацию / обучение</label><select id="servicePnr"></select></div>
+            <div class="field"><label>Контент / дизайн / адаптация материалов</label><select id="serviceContent"></select></div>
+            <div class="field"><label>Нестандартные крепления / конструкции / рамы</label><select id="serviceMetal"></select></div>
+          </div>
+          <div class="note small">Если аккаунт не уверен, можно оставить «Неясно». В выгрузке такие пункты попадут в открытые вопросы и допущения для ИТО.</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panelBody">
+          <div class="sectionHead">
+            <h2>4. Зоны / помещения / сценарии</h2>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn ghost" id="addZoneBtn" type="button">Добавить зону</button>
+              <button class="btn ghost" id="defaultsBtn" type="button">Подставить типовые зоны</button>
+            </div>
+          </div>
+          <div class="note small" style="margin-bottom:12px">Для каждой зоны аккаунт заполняет понятные вещи: что это за место, сколько там людей, что должно происходить, какие ожидания и ограничения есть у заказчика. Внизу каждой карточки видно, как это переведётся в язык конфигуратора.</div>
+          <div id="zoneList" class="zoneList"></div>
+        </div>
+      </section>
+    </main>
+
+    <aside class="stack sticky">
+      <section class="panel">
+        <div class="panelBody">
+          <div class="sectionHead"><h2>Что получит ИТО</h2><span class="tag ok">предпросчётный пакет</span></div>
+          <div id="preview" class="previewWrap"></div>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <input id="importJsonInput" type="file" accept=".json,application/json" hidden>
+</div>
+
+<script>
+const APP_STORAGE_KEY = 'vizhu-account-brief-v1';
+const CONFIGURATOR_STORAGE_KEY = 'vizhu-presale-v10-usd';
+const APP_VERSION = '1.1.0';
+const DEFAULT_USD_RATE = 80;
+const DEFAULT_MARGIN = 28;
+const DEFAULT_VAT = 20;
+
+const VIZHU_LOGO = "iVBORw0KGgoAAAANSUhEUgAAAqEAAADxCAYAAAD7s26AAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAET1SURBVHhe7d13WFVX1gbwV6SjqKACNhQFMZZYY++9xRZNUaOZNGOaZtLrzKROJp8lk2ZiJrbEiL1FoyD23sWGFVREUVQEQSl+fyRkzB4L3rPOuae8v+eZZ2ZeUCkX7rpr7712sbCwsOsgIiIiIjKQhxoQEREREemNRSgRERERGY5FKBEREREZjkUoERERERmORSgRERERGY5FKBEREREZjkUoERERERmORSgRERERGY5FKBEREREZjkUoERERERmORSgRERERGY5FKBEREREZjkUoERERERmORSgRERERGY5FKBEREREZjkUoERERERmORSgRERERGY5FKBEREREZjkUoERERERmORSgRERERGY5FKBEREREZjkUoERERERmORSgRERERGY5FKBEREREZjkUoERERERmORSgRERERGY5FKBEREREZjkUoERERERmORSgRERERGY5FKBEREREZjkUoERERERmORSgRERERGY5FKBEREREZjkUoERERERmORSgRERERGY5FKBEREREZrlhYWNh1NTSTWUn91Mi2LqblIO1UNtJOXUHaySs4d+rKf/93SjayMnLVP+JIUo+JvRvS8N5Da9XYEQaNisag0bXU2GVm+FpWrVUKny3toMaaffyXDdgWl6rG9LugEF98u7m7GrskYUMa/ubmx5HZDX2jDvqMiFRjzR4In6tGmjTrXgEvf9NUjTWR/hjtROp5sdBnIzZh45IUNRbHTqiJlC7ni8j6ZdCiZ0X0eToSj//jXrz+fXP8368dMXlPL4yL64SHX74HNeqXUf8oUZF5eBQTLUDN4vj+S1gz74Qaazbk9dpqROQWoVUDdClAv3pluxpptnFJCs6eyFJjTZp2q6BGpMPX5eyJLEMKULAItZZKNUpiwPM18cn8dvhqbRcMe7suGrYPhac3v41UdANHRauRbXz5svyTaeWoQPT8S3U1JjLc0DfqqJFmKUczsSImSY1FrJl3Uo006fV4DTUiHb4u0t+322H1YlHlKweg95M18Oak5vh6XVc8N6YR6rcpr74b0Z8U9/TAwBftW4Tm5Rbgx0/2qrFmQ16vAx//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90Hk58ps4idygs2/nsb2+FQ1FjHtk73cMkF3pUWviggO9VNjl+XnFWDrcn0e3/RfLEItLDszD3s3pGHBt4fwt4fX4u0Bq7Ho+8M4l5KtvivdQQxvRyK6a3qcXD+TnIV5X3MkE92dNv1kl+J5Q5IxWIRaRPqZHOxZl4Ylk49gwhs78GqveAytvRDvPbQWUz5MQMJ69wyRtoOYcQdQkM8uKNHdSjpwCb9Mkn2y/vET997MRNYTVq0EGncKVWNNuBRvjGJhYWGmfvYdOCpajWzregGQnZmL7Kw85GTlIycrFxkXruHU4UwOT79BUR8TxYoVw/Xr1+/43zPHHwBM/VOgn6J8LQu/Tnf633p3k2s3K4t7mpVV4/9x48eluvFtMzkPVoS3b3H0GRGpxjdVlO8Nvy9yrPTzrUVRPk/8/nmobvV45OPQGKYvQomIiIjIfrgcT0RERESGYxFKRERERIZjEUpEREREhmMRSkRERESGYxFKRERERIZjEUpEREREhmMRSkRERESGYxFKRERERIZjEUpEREREhmMRSkRERESGYxFKRERERIZjEUpEREREhmMRSkRERESGYxFKRERERIZjEUpEREREhmMRSkRERESGYxFKRERERIZjEUpEREREhmMRSkRERESGYxFKRERERIZjEUpEREREhmMRSkRERESGYxFKRERERIZjEUpEREREhmMRSkRERESGYxFKRERERIZjEUpEREREhmMRSkRERESGYxFKRERERIZjEUpEREREhmMRSkRERESGYxFKRERERIZjEUpEREREhmMRSkRERESGYxFKRERERIZjEUpEREREhmMRSkRERESGYxFKRERERIb7f73TRGjlxgOHAAAAAElFTkSuQmCC";
+
+const PROJECT_TYPES = [
+  {id:'museum', name:'Музей / выставка / visitor center'},
+  {id:'education', name:'Образовательный / карьерный центр'},
+  {id:'corporate', name:'Корпоративный офис / demo-зона'},
+  {id:'conference', name:'Конференц-зал / auditorium'},
+  {id:'retail', name:'Retail / showroom / бренд-зона'},
+  {id:'event', name:'Event / pop-up / временная инсталляция'},
+  {id:'public', name:'Общественное пространство / гос. объект'},
+  {id:'vr', name:'VR / симуляторы / тренажёры'}
+];
+const SCENARIOS = [
+  {id:'budget', name:'Рационально / бюджетно'},
+  {id:'base', name:'Рабочий стандарт / баланс'},
+  {id:'premium', name:'Имиджево / с запасом'}
+];
+const SCENARIO_EXPORT_NAMES = {
+  budget:'Бюджетный',
+  base:'Стандартный',
+  premium:'Премиальный'
+};
+const CITY_TIERS = [
+  {id:'moscow', name:'Москва / МО'},
+  {id:'regional', name:'Крупный региональный центр'},
+  {id:'remote', name:'Удалённый регион / сложная логистика'}
+];
+const URGENCY = [
+  {id:'normal', name:'Стандартный срок'},
+  {id:'tight', name:'Сжатый срок'},
+  {id:'rush', name:'Очень срочно'}
+];
+const TRI_STATE = [
+  {id:'yes', name:'Да'},
+  {id:'no', name:'Нет'},
+  {id:'unknown', name:'Неясно / надо уточнить'}
+];
+const ZONE_PURPOSES = [
+  {id:'entrance', name:'Входная группа / welcome'},
+  {id:'hall', name:'Холл / общее пространство'},
+  {id:'conference', name:'Конференц-зал / аудитория'},
+  {id:'meeting', name:'Переговорная / VC'},
+  {id:'museum', name:'Экспозиционная / музейная зона'},
+  {id:'classroom', name:'Учебная / разбор'},
+  {id:'retail', name:'Шоурум / retail'},
+  {id:'control', name:'Диспетчерская / операторская'},
+  {id:'vr', name:'VR / симулятор'},
+  {id:'outdoor', name:'Наружная зона / фасад'},
+  {id:'stage', name:'Сцена / ивент зона'}
+];
+const TASKS = [
+  {id:'content', name:'Показывать контент / презентации / данные'},
+  {id:'vc', name:'Проводить видеовстречи / гибрид'},
+  {id:'audio', name:'Хорошо озвучивать / усиливать речь'},
+  {id:'control', name:'Управлять / мониторить / наблюдать'},
+  {id:'interactive', name:'Давать интерактив / касание / выбор'},
+  {id:'wow', name:'Производить впечатление / вау-эффект'}
+];
+const DRIVER_OPTIONS = [
+  {id:'price', name:'Уложиться в бюджет'},
+  {id:'speed', name:'Быстро запустить'},
+  {id:'wow', name:'Визуально впечатлить'},
+  {id:'easy', name:'Просто управлять'},
+  {id:'reliable', name:'Надёжно и стабильно'},
+  {id:'security', name:'Безопасность / compliance'},
+  {id:'staff', name:'Минимум оператора / персонала'},
+  {id:'import', name:'Импортозамещение / ограничения по брендам'}
+];
+const INTEGRATION_OPTIONS = [
+  {id:'teams', name:'Microsoft Teams'},
+  {id:'zoom', name:'Zoom'},
+  {id:'cms', name:'CMS / signage'},
+  {id:'bms', name:'BMS / диспетчеризация'},
+  {id:'crm', name:'CRM / ERP / 1С'},
+  {id:'booking', name:'Система бронирования / расписания'},
+  {id:'analytics', name:'Аналитика / счётчики / отчёты'},
+  {id:'none', name:'Пока без интеграций'}
+];
+const ZONE_NEEDS = [
+  {id:'audio', name:'Нужен звук в зоне'},
+  {id:'microphones', name:'Нужны микрофоны'},
+  {id:'vc', name:'Нужны Teams / Zoom / гибрид'},
+  {id:'interactive', name:'Нужно касание / интерактив'},
+  {id:'wow', name:'Нужен вау-эффект'},
+  {id:'recording', name:'Нужна запись'},
+  {id:'streaming', name:'Нужна трансляция'},
+  {id:'operator', name:'Нужен операторский контроль'},
+  {id:'wayfinding', name:'Нужна навигация / инфо'},
+  {id:'kiosk', name:'Формат киоска / self-service'},
+  {id:'24x7', name:'Работа 24/7'},
+  {id:'outdoor', name:'Наружное исполнение'}
+];
+const ZONE_RESTRICTIONS = [
+  {id:'no_drill', name:'Нельзя сверлить / вмешиваться в стены'},
+  {id:'glass', name:'Много стекла / сложная акустика / свет'},
+  {id:'high_ceiling', name:'Высокие потолки'},
+  {id:'night', name:'Монтаж только ночью / вне работы'},
+  {id:'historic', name:'Исторический / чувствительный объект'},
+  {id:'hidden_cabling', name:'Нужны скрытые кабели / аккуратный монтаж'},
+  {id:'difficult_access', name:'Сложный доступ / подъём / разгрузка'},
+  {id:'power_limits', name:'Есть ограничения по питанию'},
+  {id:'outdoor', name:'Улица / фасад / влажность / пыль'}
+];
+const CONTENT_STATUS = [
+  {id:'ready', name:'Контент уже готов'},
+  {id:'adapt', name:'Часть есть, нужна адаптация'},
+  {id:'new', name:'Нужно делать новый контент'},
+  {id:'unknown', name:'Пока непонятно'}
+];
+const DEFAULT_ZONES_BY_TYPE = {
+  education: [
+    {name:'Лекторий / аудитория', purpose:'classroom', area:72, capacity:35, primaryTask:'content'},
+    {name:'Интерактивная зона', purpose:'classroom', area:35, capacity:12, primaryTask:'interactive'},
+    {name:'Холл / welcome', purpose:'entrance', area:28, capacity:20, primaryTask:'content'}
+  ],
+  conference: [
+    {name:'Основной зал', purpose:'conference', area:140, capacity:120, primaryTask:'content'},
+    {name:'Президиум / сцена', purpose:'stage', area:48, capacity:12, primaryTask:'wow'},
+    {name:'Lobby / регистрация', purpose:'entrance', area:40, capacity:40, primaryTask:'interactive'}
+  ],
+  corporate: [
+    {name:'Переговорная S', purpose:'meeting', area:24, capacity:8, primaryTask:'vc'},
+    {name:'Переговорная L', purpose:'meeting', area:42, capacity:14, primaryTask:'vc'},
+    {name:'Demo-зона', purpose:'hall', area:55, capacity:20, primaryTask:'wow'}
+  ],
+  museum: [
+    {name:'Входная welcome-зона', purpose:'entrance', area:35, capacity:30, primaryTask:'content'},
+    {name:'Экспозиция 1', purpose:'museum', area:90, capacity:25, primaryTask:'interactive'},
+    {name:'Экспозиция 2', purpose:'museum', area:80, capacity:20, primaryTask:'wow'}
+  ],
+  event: [
+    {name:'Сцена', purpose:'stage', area:120, capacity:200, primaryTask:'wow'},
+    {name:'Входная зона', purpose:'entrance', area:45, capacity:70, primaryTask:'content'},
+    {name:'FOH / операторская', purpose:'control', area:18, capacity:4, primaryTask:'control'}
+  ],
+  retail: [
+    {name:'Витрина / фасад', purpose:'outdoor', area:35, capacity:0, primaryTask:'wow'},
+    {name:'Основной зал', purpose:'retail', area:95, capacity:50, primaryTask:'content'},
+    {name:'Инфокиоск', purpose:'retail', area:8, capacity:4, primaryTask:'interactive'}
+  ],
+  public: [
+    {name:'Холл', purpose:'hall', area:70, capacity:60, primaryTask:'content'},
+    {name:'Стойка обслуживания', purpose:'retail', area:28, capacity:12, primaryTask:'interactive'},
+    {name:'Зал ожидания', purpose:'hall', area:36, capacity:20, primaryTask:'content'}
+  ],
+  vr: [
+    {name:'VR тренажёр 1', purpose:'vr', area:35, capacity:2, primaryTask:'wow'},
+    {name:'VR тренажёр 2', purpose:'vr', area:35, capacity:2, primaryTask:'interactive'},
+    {name:'Зона оператора', purpose:'control', area:16, capacity:2, primaryTask:'control'}
+  ]
+};
+
+let zoneCounter = 1;
+let state = { zones: [] };
+let autosaveTimer = null;
+
+const el = id => document.getElementById(id);
+const num = v => Number(v) || 0;
+const escapeHtml = v => String(v ?? '').replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+const uniq = arr => Array.from(new Set((arr || []).filter(Boolean)));
+
+function labelById(list, id, fallback=''){
+  return list.find(x => x.id === id)?.name || fallback || id || '—';
+}
+function scenarioExportName(id){ return SCENARIO_EXPORT_NAMES[id] || labelById(SCENARIOS, id, id); }
+function purposeName(id){ return labelById(ZONE_PURPOSES, id, id); }
+function taskName(id){ return labelById(TASKS, id, id); }
+function cityTierName(id){ return labelById(CITY_TIERS, id, id); }
+function urgencyName(id){ return labelById(URGENCY, id, id); }
+function boolText(v){ return v ? 'да' : 'нет'; }
+function triToBool(v, fallback){
+  if(v === 'yes') return true;
+  if(v === 'no') return false;
+  return fallback;
+}
+function sanitizeFileName(v){
+  return String(v || 'vizhu-brief').replace(/[^\wа-яё\- ]/gi,'').trim().replace(/\s+/g,'_') || 'vizhu-brief';
+}
+function downloadBinary(filename, content, type){
+  const blob = new Blob([content], {type});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 800);
+}
+function showStatus(text, kind='info'){
+  const box = el('statusLine');
+  box.className = 'status ' + kind;
+  box.textContent = text;
+}
+function populateSelect(id, items, options={}){
+  const node = el(id);
+  const rows = [];
+  if(options.includeBlank) rows.push(`<option value="">${escapeHtml(options.blankLabel || '—')}</option>`);
+  rows.push(...items.map(item => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.name)}</option>`));
+  node.innerHTML = rows.join('');
+  if(options.defaultValue !== undefined) node.value = options.defaultValue;
+}
+function renderCheckGroup(containerId, groupName, options){
+  el(containerId).innerHTML = options.map(item => `
+    <label class="chipCheck">
+      <input type="checkbox" data-group="${escapeHtml(groupName)}" value="${escapeHtml(item.id)}">
+      <span>${escapeHtml(item.name)}</span>
+    </label>
+  `).join('');
+}
+function getCheckedValues(groupName){
+  return Array.from(document.querySelectorAll(`input[data-group="${groupName}"]:checked`)).map(x => x.value);
+}
+function setCheckedValues(groupName, values){
+  const set = new Set(values || []);
+  document.querySelectorAll(`input[data-group="${groupName}"]`).forEach(box => { box.checked = set.has(box.value); });
+}
+function defaultProjectValues(){
+  return {
+    projectName:'',
+    customerName:'',
+    accountManager:'',
+    customerContact:'',
+    projectType:'education',
+    scenario:'base',
+    cityTier:'moscow',
+    urgency:'normal',
+    deadline:'',
+    targetBudget:'',
+    projectArea:'',
+    ceilingHeight:'',
+    floors:'1',
+    objectCity:'',
+    objectAddress:'',
+    businessGoal:'',
+    successCriteria:'',
+    decisionMaker:'',
+    existingEquipment:'',
+    brandPreferences:'',
+    forbiddenBrands:'',
+    projectNotes:'',
+    serviceDelivery:'yes',
+    serviceInstall:'yes',
+    servicePnr:'yes',
+    serviceContent:'unknown',
+    serviceMetal:'unknown',
+    decisionDrivers:[],
+    integrations:[]
+  };
+}
+function fillProjectForm(project = {}){
+  const data = {...defaultProjectValues(), ...project};
+  Object.entries(data).forEach(([key, value]) => {
+    const node = el(key);
+    if(node && node.type !== 'checkbox') node.value = value ?? '';
+  });
+  setCheckedValues('decisionDrivers', data.decisionDrivers || []);
+  setCheckedValues('integrations', data.integrations || []);
+}
+function collectProjectFromForm(){
+  return {
+    projectName: el('projectName').value.trim(),
+    customerName: el('customerName').value.trim(),
+    accountManager: el('accountManager').value.trim(),
+    customerContact: el('customerContact').value.trim(),
+    projectType: el('projectType').value,
+    scenario: el('scenario').value,
+    cityTier: el('cityTier').value,
+    urgency: el('urgency').value,
+    deadline: el('deadline').value,
+    targetBudget: el('targetBudget').value,
+    projectArea: el('projectArea').value,
+    ceilingHeight: el('ceilingHeight').value,
+    floors: el('floors').value,
+    objectCity: el('objectCity').value.trim(),
+    objectAddress: el('objectAddress').value.trim(),
+    businessGoal: el('businessGoal').value.trim(),
+    successCriteria: el('successCriteria').value.trim(),
+    decisionMaker: el('decisionMaker').value.trim(),
+    existingEquipment: el('existingEquipment').value.trim(),
+    brandPreferences: el('brandPreferences').value.trim(),
+    forbiddenBrands: el('forbiddenBrands').value.trim(),
+    projectNotes: el('projectNotes').value.trim(),
+    serviceDelivery: el('serviceDelivery').value,
+    serviceInstall: el('serviceInstall').value,
+    servicePnr: el('servicePnr').value,
+    serviceContent: el('serviceContent').value,
+    serviceMetal: el('serviceMetal').value,
+    decisionDrivers: getCheckedValues('decisionDrivers'),
+    integrations: getCheckedValues('integrations')
+  };
+}
+function nextZoneId(){
+  return 'z' + (zoneCounter++);
+}
+function makeZone(seed = {}){
+  return {
+    id: seed.id || nextZoneId(),
+    name: seed.name || `Зона ${state.zones.length + 1}`,
+    purpose: seed.purpose || 'hall',
+    area: seed.area ?? '',
+    capacity: seed.capacity ?? '',
+    primaryTask: seed.primaryTask || 'content',
+    scenario: seed.scenario || '',
+    expectation: seed.expectation || '',
+    mustHave: seed.mustHave || '',
+    niceToHave: seed.niceToHave || '',
+    existingEquipment: seed.existingEquipment || '',
+    contentStatus: seed.contentStatus || 'unknown',
+    notes: seed.notes || '',
+    needs: uniq(seed.needs || []),
+    restrictions: uniq(seed.restrictions || [])
+  };
+}
+function sanitizeZone(zone){
+  return {
+    ...makeZone(zone),
+    area: zone.area ?? '',
+    capacity: zone.capacity ?? '',
+    needs: uniq(zone.needs || []),
+    restrictions: uniq(zone.restrictions || [])
+  };
+}
+function zoneChoiceHtml(zone, key, items){
+  const set = new Set(zone[key] || []);
+  return items.map(item => `
+    <label class="chipCheck">
+      <input type="checkbox" data-zone-id="${escapeHtml(zone.id)}" data-array="${escapeHtml(key)}" value="${escapeHtml(item.id)}" ${set.has(item.id) ? 'checked' : ''}>
+      <span>${escapeHtml(item.name)}</span>
+    </label>
+  `).join('');
+}
+function zoneCardHtml(zone, index){
+  return `
+    <div class="zoneCard" data-zone-card="${escapeHtml(zone.id)}">
+      <div class="zoneHead">
+        <div class="zoneName">${index + 1}. ${escapeHtml(zone.name || 'Новая зона')}</div>
+        <button class="btn danger" type="button" data-remove-zone="${escapeHtml(zone.id)}">Удалить</button>
+      </div>
+
+      <div class="row4">
+        <div class="field"><label>Название зоны</label><input data-zone-id="${escapeHtml(zone.id)}" data-key="name" value="${escapeHtml(zone.name)}" placeholder="Например: переговорная, холл, сцена"></div>
+        <div class="field"><label>Тип зоны</label><select data-zone-id="${escapeHtml(zone.id)}" data-key="purpose">${ZONE_PURPOSES.map(item => `<option value="${item.id}" ${item.id === zone.purpose ? 'selected' : ''}>${escapeHtml(item.name)}</option>`).join('')}</select></div>
+        <div class="field"><label>Площадь, м²</label><input type="number" min="0" step="1" data-zone-id="${escapeHtml(zone.id)}" data-key="area" value="${escapeHtml(zone.area)}" placeholder="Если известна"></div>
+        <div class="field"><label>Людей одновременно / поток</label><input type="number" min="0" step="1" data-zone-id="${escapeHtml(zone.id)}" data-key="capacity" value="${escapeHtml(zone.capacity)}" placeholder="Если известно"></div>
+      </div>
+
+      <div class="row2">
+        <div class="field"><label>Главное, что должно происходить в зоне</label><select data-zone-id="${escapeHtml(zone.id)}" data-key="primaryTask">${TASKS.map(item => `<option value="${item.id}" ${item.id === zone.primaryTask ? 'selected' : ''}>${escapeHtml(item.name)}</option>`).join('')}</select></div>
+        <div class="field"><label>Уровень решения по зоне</label><select data-zone-id="${escapeHtml(zone.id)}" data-key="scenario"><option value="" ${!zone.scenario ? 'selected' : ''}>Как по проекту</option>${SCENARIOS.map(item => `<option value="${item.id}" ${item.id === zone.scenario ? 'selected' : ''}>${escapeHtml(item.name)}</option>`).join('')}</select></div>
+      </div>
+
+      <div class="field"><label>Что заказчик ожидает именно в этой зоне</label><textarea data-zone-id="${escapeHtml(zone.id)}" data-key="expectation" placeholder="Например: удобные Teams-встречи, яркий welcome-эффект, понятная навигация, публичные выступления, интерактив для посетителей...">${escapeHtml(zone.expectation)}</textarea></div>
+
+      <div class="field"><label>Что дополнительно нужно в зоне</label><div class="chipGroup">${zoneChoiceHtml(zone, 'needs', ZONE_NEEDS)}</div></div>
+      <div class="field"><label>Какие ограничения есть на площадке</label><div class="chipGroup">${zoneChoiceHtml(zone, 'restrictions', ZONE_RESTRICTIONS)}</div></div>
+
+      <div class="row2">
+        <div class="field"><label>Must have</label><textarea data-zone-id="${escapeHtml(zone.id)}" data-key="mustHave" placeholder="То, без чего клиент не примет решение">${escapeHtml(zone.mustHave)}</textarea></div>
+        <div class="field"><label>Nice to have</label><textarea data-zone-id="${escapeHtml(zone.id)}" data-key="niceToHave" placeholder="Желательно, но можно обсуждать">${escapeHtml(zone.niceToHave)}</textarea></div>
+      </div>
+
+      <div class="row2">
+        <div class="field"><label>Что уже есть в этой зоне</label><textarea data-zone-id="${escapeHtml(zone.id)}" data-key="existingEquipment" placeholder="Например: экран есть, кабельная подготовка есть, мебель уже стоит">${escapeHtml(zone.existingEquipment)}</textarea></div>
+        <div class="field"><label>Статус контента</label><select data-zone-id="${escapeHtml(zone.id)}" data-key="contentStatus">${CONTENT_STATUS.map(item => `<option value="${item.id}" ${item.id === zone.contentStatus ? 'selected' : ''}>${escapeHtml(item.name)}</option>`).join('')}</select></div>
+      </div>
+
+      <div class="field"><label>Комментарий по зоне</label><textarea data-zone-id="${escapeHtml(zone.id)}" data-key="notes" placeholder="Любая полезная деталь для инженерного просчёта">${escapeHtml(zone.notes)}</textarea></div>
+
+      <div class="zoneMeta" data-zone-meta="${escapeHtml(zone.id)}"></div>
+    </div>
+  `;
+}
+function renderZones(){
+  el('zoneList').innerHTML = state.zones.map(zoneCardHtml).join('');
+}
+function addZone(seed = {}){
+  state.zones.push(makeZone(seed));
+  renderZones();
+  refreshDerivedViews();
+}
+function removeZone(zoneId){
+  state.zones = state.zones.filter(zone => zone.id !== zoneId);
+  if(!state.zones.length) state.zones.push(makeZone({name:'Зона 1'}));
+  renderZones();
+  refreshDerivedViews();
+}
+function syncZoneCounter(){
+  const maxId = state.zones.map(z => Number(String(z.id || '').replace(/[^\d]/g,'')) || 0).reduce((a,b) => Math.max(a,b), 0);
+  zoneCounter = Math.max(maxId + 1, state.zones.length + 1, 1);
+}
+function applyDefaultZones(){
+  const type = el('projectType').value || 'education';
+  const template = DEFAULT_ZONES_BY_TYPE[type] || [];
+  if(!template.length){
+    showStatus('Для выбранного типа проекта нет типового набора зон.', 'warn');
+    return;
+  }
+  const shouldReplace = state.zones.length > 1 || (state.zones[0] && (state.zones[0].name || state.zones[0].area || state.zones[0].expectation));
+  if(shouldReplace && !confirm('Заменить текущие зоны типовым набором?')) return;
+  state.zones = template.map(zone => makeZone(zone));
+  renderZones();
+  refreshDerivedViews();
+  showStatus('Типовые зоны подставлены.', 'ok');
+}
+function updateZoneValue(zoneId, key, value){
+  const zone = state.zones.find(item => item.id === zoneId);
+  if(!zone) return;
+  zone[key] = value;
+}
+function toggleZoneArray(zoneId, key, value, checked){
+  const zone = state.zones.find(item => item.id === zoneId);
+  if(!zone) return;
+  const set = new Set(zone[key] || []);
+  if(checked) set.add(value);
+  else set.delete(value);
+  zone[key] = Array.from(set);
+}
+function projectAreaFromZones(zones){
+  return zones.reduce((sum, zone) => sum + num(zone.area), 0);
+}
+function recommendScale(zone){
+  const area = num(zone.area);
+  const capacity = num(zone.capacity);
+  if(area >= 70 || capacity >= 60) return 'large';
+  if(area >= 25 || capacity >= 12) return 'medium';
+  return 'small';
+}
+function buildGlobalFlags(project, zones){
+  const hasComplexContent = zones.some(zone => ['interactive','wow'].includes(zone.primaryTask) || (zone.needs || []).some(n => ['interactive','wow','recording','streaming','kiosk'].includes(n)));
+  const hasDifficultMounting = zones.some(zone => ['stage','outdoor'].includes(zone.purpose) || (zone.restrictions || []).some(r => ['no_drill','high_ceiling','historic','outdoor','difficult_access'].includes(r)));
+  return {
+    install: triToBool(project.serviceInstall, true),
+    pnr: triToBool(project.servicePnr, true),
+    content: triToBool(project.serviceContent, hasComplexContent),
+    metal: triToBool(project.serviceMetal, hasDifficultMounting),
+    delivery: triToBool(project.serviceDelivery, true)
+  };
+}
+function buildAssumptions(project, zones, flags){
+  const assumptions = [];
+  if(project.serviceInstall === 'unknown') assumptions.push('Монтаж принят как включённый по умолчанию.');
+  if(project.servicePnr === 'unknown') assumptions.push('ПНР/ввод в эксплуатацию принят как включённый по умолчанию.');
+  if(project.serviceDelivery === 'unknown') assumptions.push('Доставка принята как включённая по умолчанию.');
+  if(project.serviceContent === 'unknown' && flags.content) assumptions.push('Контентный блок отмечен как вероятный из-за интерактива/вау-сценариев/записи.');
+  if(project.serviceMetal === 'unknown' && flags.metal) assumptions.push('Нестандартные конструкции помечены как вероятные из-за типа зоны или ограничений монтажа.');
+  if(!num(project.projectArea) && projectAreaFromZones(zones) > 0) assumptions.push('Общая площадь объекта оценена по сумме площадей зон.');
+  if(!num(project.ceilingHeight)) assumptions.push('Высота потолков в snapshot выставлена по умолчанию 3.6 м до уточнения.');
+  return assumptions;
+}
+function buildOpenQuestions(project, zones, flags){
+  const questions = [];
+  if(!project.projectName) questions.push('Не заполнено название проекта.');
+  if(!project.customerName) questions.push('Не заполнен заказчик.');
+  if(!project.customerContact) questions.push('Нет контакта заказчика / ответственного лица.');
+  if(!project.targetBudget) questions.push('Не известен целевой бюджет клиента.');
+  if(!project.deadline) questions.push('Не указана желаемая дата запуска.');
+  if(!project.objectCity && !project.objectAddress) questions.push('Не указан город или адрес объекта.');
+  if(!project.businessGoal) questions.push('Не сформулирована бизнес-цель проекта.');
+  if(!project.successCriteria) questions.push('Не описан критерий успеха для клиента.');
+  if(!project.existingEquipment) questions.push('Не описано, что уже есть у заказчика.');
+  if(project.serviceContent === 'unknown' && flags.content) questions.push('Нужно уточнить объём контента / дизайна / адаптации.');
+  if(project.serviceMetal === 'unknown' && flags.metal) questions.push('Нужно уточнить потребность в металлоконструкциях / нестандартных креплениях.');
+  zones.forEach((zone, idx) => {
+    if(!zone.name) questions.push(`Зона ${idx + 1}: нет названия.`);
+    if(!num(zone.area)) questions.push(`Зона ${idx + 1} «${zone.name || 'без названия'}»: нет площади.`);
+    if(!num(zone.capacity) && zone.capacity !== 0 && zone.capacity !== '0') questions.push(`Зона ${idx + 1} «${zone.name || 'без названия'}»: нет вместимости/потока.`);
+    if(!zone.expectation) questions.push(`Зона ${idx + 1} «${zone.name || 'без названия'}»: не описано ожидание заказчика.`);
+    if(zone.contentStatus === 'unknown' && ['content','interactive','wow'].includes(zone.primaryTask)) questions.push(`Зона ${idx + 1} «${zone.name || 'без названия'}»: нужно уточнить статус контента.`);
+    if((zone.needs || []).includes('vc') && !project.integrations.some(x => ['teams','zoom'].includes(x))) questions.push(`Зона ${idx + 1} «${zone.name || 'без названия'}»: есть запрос на VC, но не указана платформа Teams/Zoom.`);
+  });
+  return questions;
+}
+function normalizeZone(zone, project, globalFlags){
+  const scenario = zone.scenario || project.scenario || 'base';
+  const contentLikely = zone.contentStatus === 'new' || zone.contentStatus === 'adapt' || ['interactive','wow'].includes(zone.primaryTask);
+  const metalLikely = ['stage','outdoor'].includes(zone.purpose) || (zone.restrictions || []).some(r => ['no_drill','high_ceiling','historic','outdoor','difficult_access'].includes(r));
+  const flags = {
+    install: globalFlags.install,
+    pnr: globalFlags.pnr || (zone.needs || []).some(n => ['vc','interactive','operator','recording','streaming'].includes(n)),
+    content: globalFlags.content || contentLikely,
+    metal: globalFlags.metal || metalLikely,
+    delivery: globalFlags.delivery
+  };
+  const needs = uniq(zone.needs || []);
+  const restrictions = uniq(zone.restrictions || []);
+  const summaryParts = [
+    zone.expectation && `Ожидание: ${zone.expectation}`,
+    zone.mustHave && `Must have: ${zone.mustHave}`,
+    zone.niceToHave && `Nice to have: ${zone.niceToHave}`,
+    zone.existingEquipment && `Что уже есть: ${zone.existingEquipment}`,
+    zone.notes && `Комментарий: ${zone.notes}`
+  ].filter(Boolean);
+  return {
+    id: zone.id,
+    name: zone.name || 'Без названия',
+    purpose: zone.purpose || 'hall',
+    purposeName: purposeName(zone.purpose || 'hall'),
+    area: num(zone.area),
+    capacity: num(zone.capacity),
+    primaryTask: zone.primaryTask || 'content',
+    primaryTaskName: taskName(zone.primaryTask || 'content'),
+    scenario,
+    scenarioName: scenarioExportName(scenario),
+    installationScale: recommendScale(zone),
+    installationTemplateId:'',
+    installationGroup:'',
+    flags,
+    needs,
+    needLabels: needs.map(id => labelById(ZONE_NEEDS, id, id)),
+    restrictions,
+    restrictionLabels: restrictions.map(id => labelById(ZONE_RESTRICTIONS, id, id)),
+    contentStatus: zone.contentStatus || 'unknown',
+    contentStatusName: labelById(CONTENT_STATUS, zone.contentStatus || 'unknown', zone.contentStatus || 'unknown'),
+    expectation: zone.expectation || '',
+    mustHave: zone.mustHave || '',
+    niceToHave: zone.niceToHave || '',
+    existingEquipment: zone.existingEquipment || '',
+    notes: zone.notes || '',
+    summaryText: summaryParts.join(' | ')
+  };
+}
+function buildProjectComment(project, assumptions, openQuestions){
+  const lines = [];
+  if(project.businessGoal) lines.push(`Бизнес-цель: ${project.businessGoal}`);
+  if(project.successCriteria) lines.push(`Критерий успеха: ${project.successCriteria}`);
+  if(project.decisionMaker) lines.push(`ЛПР / согласующие: ${project.decisionMaker}`);
+  if(project.decisionDrivers.length) lines.push(`Приоритеты клиента: ${project.decisionDrivers.map(id => labelById(DRIVER_OPTIONS, id, id)).join(', ')}`);
+  const integrations = project.integrations.filter(id => id !== 'none');
+  if(integrations.length) lines.push(`Интеграции / платформы: ${integrations.map(id => labelById(INTEGRATION_OPTIONS, id, id)).join(', ')}`);
+  if(project.existingEquipment) lines.push(`Что уже есть: ${project.existingEquipment}`);
+  if(project.brandPreferences) lines.push(`Предпочтения по брендам: ${project.brandPreferences}`);
+  if(project.forbiddenBrands) lines.push(`Ограничения по брендам: ${project.forbiddenBrands}`);
+  if(project.projectNotes) lines.push(`Комментарий аккаунта: ${project.projectNotes}`);
+  if(assumptions.length) lines.push(`Автодопущения: ${assumptions.join(' ')}`);
+  if(openQuestions.length) lines.push(`Открытые вопросы: ${openQuestions.join(' ')}`);
+  return lines.join('\n');
+}
+function buildEngineerSummary(project, normalizedZones, globalFlags, assumptions, openQuestions){
+  const parts = [];
+  parts.push(`Проект: ${project.projectName || 'без названия'} / ${project.customerName || 'заказчик не указан'}.`);
+  parts.push(`Тип: ${labelById(PROJECT_TYPES, project.projectType, project.projectType)}. Сценарий: ${scenarioExportName(project.scenario)}. Логистика: ${cityTierName(project.cityTier)}. Срочность: ${urgencyName(project.urgency)}.`);
+  if(project.targetBudget) parts.push(`Целевая цена клиента: ${new Intl.NumberFormat('ru-RU').format(num(project.targetBudget))} ₽.`);
+  if(project.deadline) parts.push(`Ориентир запуска: ${project.deadline}.`);
+  if(project.businessGoal) parts.push(`Цель клиента: ${project.businessGoal}.`);
+  if(project.successCriteria) parts.push(`Критерий успеха: ${project.successCriteria}.`);
+  parts.push(`Глобальные флаги: монтаж ${boolText(globalFlags.install)}, ПНР ${boolText(globalFlags.pnr)}, контент ${boolText(globalFlags.content)}, металл ${boolText(globalFlags.metal)}, доставка ${boolText(globalFlags.delivery)}.`);
+  normalizedZones.forEach((zone, index) => {
+    const add = [];
+    add.push(`${index + 1}) ${zone.name}: ${zone.purposeName}, ${zone.area || '0'} м², ${zone.capacity || '0'} чел., задача — ${zone.primaryTaskName}, сценарий — ${zone.scenarioName}.`);
+    if(zone.needLabels.length) add.push(`Нужно: ${zone.needLabels.join(', ')}.`);
+    if(zone.restrictionLabels.length) add.push(`Ограничения: ${zone.restrictionLabels.join(', ')}.`);
+    if(zone.expectation) add.push(`Ожидание клиента: ${zone.expectation}.`);
+    if(zone.mustHave) add.push(`Must have: ${zone.mustHave}.`);
+    if(zone.niceToHave) add.push(`Nice to have: ${zone.niceToHave}.`);
+    if(zone.existingEquipment) add.push(`Что уже есть: ${zone.existingEquipment}.`);
+    if(zone.notes) add.push(`Комментарий: ${zone.notes}.`);
+    parts.push(add.join(' '));
+  });
+  if(assumptions.length) parts.push(`Допущения: ${assumptions.join(' ')}`);
+  if(openQuestions.length) parts.push(`Открытые вопросы: ${openQuestions.join(' ')}`);
+  return parts.join(' ');
+}
+function computeCompleteness(project, zones){
+  let done = 0;
+  let total = 0;
+  const projectChecks = [
+    !!project.projectName,
+    !!project.customerName,
+    !!project.projectType,
+    !!project.scenario,
+    !!project.cityTier,
+    !!project.urgency,
+    !!project.customerContact,
+    !!project.deadline,
+    !!project.targetBudget,
+    !!(project.objectCity || project.objectAddress),
+    !!project.businessGoal,
+    !!project.successCriteria,
+    !!project.existingEquipment
+  ];
+  projectChecks.forEach(v => { total += 1; if(v) done += 1; });
+  zones.forEach(zone => {
+    [!!zone.name, !!zone.purpose, !!zone.primaryTask, !!num(zone.area), !!zone.expectation, !!(num(zone.capacity) || zone.capacity === 0 || zone.capacity === '0')].forEach(v => {
+      total += 1;
+      if(v) done += 1;
+    });
+  });
+  return total ? Math.round(done / total * 100) : 0;
+}
+function buildConfiguratorSnapshot(project, normalizedZones, globalFlags, assumptions, openQuestions, engineerSummary){
+  const projectArea = num(project.projectArea) || projectAreaFromZones(normalizedZones);
+  const ceilingHeight = num(project.ceilingHeight) || 3.6;
+  const floors = Math.max(1, num(project.floors) || 1);
+  const projectNotes = buildProjectComment(project, assumptions, openQuestions);
+  return {
+    version: CONFIGURATOR_STORAGE_KEY,
+    pricingBase:'USD',
+    fields: {
+      projectName: project.projectName || 'Новый пресейл / объект',
+      customerName: project.customerName || 'Новый заказчик',
+      projectType: project.projectType || 'education',
+      scenario: project.scenario || 'base',
+      cityTier: project.cityTier || 'moscow',
+      urgency: project.urgency || 'normal',
+      calcMode: 'auto',
+      usdRate: DEFAULT_USD_RATE,
+      projectArea,
+      ceilingHeight,
+      floors,
+      targetBudget: num(project.targetBudget) || 0,
+      marginPct: DEFAULT_MARGIN,
+      vatPct: DEFAULT_VAT,
+      complexity: 1,
+      logistics: 1,
+      complexityAuto: true,
+      logisticsAuto: true,
+      projectNotes: [projectNotes, engineerSummary].filter(Boolean).join('\n\n'),
+      searchInput: '',
+      categoryFilter: 'all',
+      libraryScenarioFilter: 'all',
+      zoneFilter: 'all'
+    },
+    zones: normalizedZones.map(zone => ({
+      id: zone.id,
+      name: zone.name,
+      purpose: zone.purpose,
+      area: zone.area || 0,
+      capacity: zone.capacity || 0,
+      primaryTask: zone.primaryTask,
+      scenario: zone.scenario,
+      flags: {...zone.flags},
+      installationTemplateId: zone.installationTemplateId || '',
+      installationScale: zone.installationScale || 'medium',
+      installationGroup: zone.installationGroup || ''
+    })),
+    estimate: [],
+    flags: {...globalFlags},
+    lastId: 1,
+    lastZoneId: normalizedZones.length + 1
+  };
+}
+function buildBriefPackage(){
+  const project = collectProjectFromForm();
+  const zones = state.zones.map(sanitizeZone);
+  const globalFlags = buildGlobalFlags(project, zones);
+  const normalizedZones = zones.map(zone => normalizeZone(zone, project, globalFlags));
+  const assumptions = buildAssumptions(project, zones, globalFlags);
+  const openQuestions = buildOpenQuestions(project, zones, globalFlags);
+  const completeness = computeCompleteness(project, zones);
+  const engineerSummary = buildEngineerSummary(project, normalizedZones, globalFlags, assumptions, openQuestions);
+  const configurator = buildConfiguratorSnapshot(project, normalizedZones, globalFlags, assumptions, openQuestions, engineerSummary);
+  return {
+    meta: {
+      app: 'VIZHU Account Brief',
+      version: APP_VERSION,
+      exportedAt: new Date().toISOString()
+    },
+    project,
+    zones,
+    normalized: {
+      completeness,
+      globalFlags,
+      assumptions,
+      openQuestions,
+      normalizedZones,
+      engineerSummary,
+      configurator
+    }
+  };
+}
+function zoneMetaHtml(normalizedZone){
+  const flagTags = Object.entries(normalizedZone.flags).map(([key, value]) => value ? `<span class="tag lime">${escapeHtml(key)}</span>` : '').join('');
+  const needs = normalizedZone.needLabels.length ? normalizedZone.needLabels.join(', ') : '—';
+  const restrictions = normalizedZone.restrictionLabels.length ? normalizedZone.restrictionLabels.join(', ') : '—';
+  return `
+    <div class="metaLine"><b>Маппинг в конфигуратор:</b> purpose = <span class="tag ok">${escapeHtml(normalizedZone.purpose)}</span> · primaryTask = <span class="tag ok">${escapeHtml(normalizedZone.primaryTask)}</span> · scenario = <span class="tag ok">${escapeHtml(normalizedZone.scenario)}</span> · installScale = <span class="tag ok">${escapeHtml(normalizedZone.installationScale)}</span></div>
+    <div class="metaLine"><b>Флаги зоны:</b> ${flagTags || '<span class="tag">без спецфлагов</span>'}</div>
+    <div class="metaLine"><b>Потребности:</b> ${escapeHtml(needs)}</div>
+    <div class="metaLine"><b>Ограничения:</b> ${escapeHtml(restrictions)}</div>
+    <div class="metaLine"><b>Контент:</b> ${escapeHtml(normalizedZone.contentStatusName)}</div>
+  `;
+}
+function renderHero(pack){
+  el('heroZones').textContent = String(pack.zones.length);
+  el('heroCompleteness').textContent = `${pack.normalized.completeness}%`;
+  el('heroQuestions').textContent = String(pack.normalized.openQuestions.length);
+  const flags = Object.entries(pack.normalized.globalFlags).filter(([,v]) => v).map(([k]) => k).join(', ') || '—';
+  el('heroFlags').textContent = flags;
+}
+function renderPreview(pack){
+  renderHero(pack);
+  const flags = pack.normalized.globalFlags;
+  const flagLine = Object.entries(flags).map(([key, value]) => `${key}: ${value ? 'да' : 'нет'}`).join(' · ');
+  const openQuestionsHtml = pack.normalized.openQuestions.length
+    ? `<ul class="list">${pack.normalized.openQuestions.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
+    : '<div class="small">Открытых вопросов нет, бриф выглядит достаточно полным для первого инженерного просчёта.</div>';
+  const assumptionsHtml = pack.normalized.assumptions.length
+    ? `<ul class="list">${pack.normalized.assumptions.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
+    : '<div class="small">Автодопущений нет.</div>';
+  const project = pack.project;
+  el('preview').innerHTML = `
+    <div class="kpiGrid">
+      <div class="previewCard"><div class="label small">Готовность брифа</div><div style="font-size:26px;font-weight:800">${pack.normalized.completeness}%</div><div class="footerNote">чем выше, тем меньше уточнений от ИТО</div></div>
+      <div class="previewCard"><div class="label small">Зон для просчёта</div><div style="font-size:26px;font-weight:800">${pack.zones.length}</div><div class="footerNote">каждая зона уйдёт отдельной строкой в выгрузку</div></div>
+      <div class="previewCard"><div class="label small">Открытых вопросов</div><div style="font-size:26px;font-weight:800">${pack.normalized.openQuestions.length}</div><div class="footerNote">их увидит ИТО в отдельном листе Excel</div></div>
+      <div class="previewCard"><div class="label small">Глобальные флаги</div><div style="font-size:18px;font-weight:800">${escapeHtml(flagLine)}</div><div class="footerNote">сервисные блоки уровня проекта</div></div>
+    </div>
+
+    <div class="previewCard">
+      <div class="small" style="margin-bottom:8px;color:var(--muted)">Паспорт, который увидит ИТО</div>
+      <div><b>Проект:</b> ${escapeHtml(project.projectName || '—')}</div>
+      <div><b>Заказчик:</b> ${escapeHtml(project.customerName || '—')}</div>
+      <div><b>Тип:</b> ${escapeHtml(labelById(PROJECT_TYPES, project.projectType, project.projectType))}</div>
+      <div><b>Сценарий:</b> ${escapeHtml(scenarioExportName(project.scenario))}</div>
+      <div><b>Город / логистика:</b> ${escapeHtml(cityTierName(project.cityTier))}</div>
+      <div><b>Срочность:</b> ${escapeHtml(urgencyName(project.urgency))}</div>
+      <div><b>Бюджет:</b> ${project.targetBudget ? escapeHtml(new Intl.NumberFormat('ru-RU').format(num(project.targetBudget)) + ' ₽') : '—'}</div>
+      <div><b>Дата запуска:</b> ${escapeHtml(project.deadline || '—')}</div>
+      <div><b>Площадь объекта:</b> ${escapeHtml(String(num(project.projectArea) || projectAreaFromZones(pack.zones) || '—'))}</div>
+      <div><b>Что важно клиенту:</b> ${escapeHtml((project.decisionDrivers || []).map(id => labelById(DRIVER_OPTIONS, id, id)).join(', ') || '—')}</div>
+      <div><b>Интеграции:</b> ${escapeHtml((project.integrations || []).map(id => labelById(INTEGRATION_OPTIONS, id, id)).join(', ') || '—')}</div>
+    </div>
+
+    <div class="callout ${pack.normalized.openQuestions.length ? 'warn' : 'ok'}">
+      <div style="font-weight:800;margin-bottom:6px">Открытые вопросы</div>
+      ${openQuestionsHtml}
+    </div>
+
+    <div class="callout">
+      <div style="font-weight:800;margin-bottom:6px">Допущения для первого расчёта</div>
+      ${assumptionsHtml}
+    </div>
+
+    <div class="previewCard">
+      <div style="font-weight:800;margin-bottom:8px">Зоны, нормализованные под конфигуратор</div>
+      <div class="previewList">
+        ${pack.normalized.normalizedZones.map((zone, index) => `
+          <div class="previewItem">
+            <div style="font-weight:800">${index + 1}. ${escapeHtml(zone.name)}</div>
+            <div class="small" style="margin:6px 0 8px;color:var(--muted)">${escapeHtml(zone.purposeName)} · ${escapeHtml(zone.primaryTaskName)} · ${escapeHtml(zone.scenarioName)} · ${zone.area || 0} м² · ${zone.capacity || 0} чел.</div>
+            <div><b>IDs:</b> purpose = <code>${escapeHtml(zone.purpose)}</code>, primaryTask = <code>${escapeHtml(zone.primaryTask)}</code>, scenario = <code>${escapeHtml(zone.scenario)}</code></div>
+            <div><b>Потребности:</b> ${escapeHtml(zone.needLabels.join(', ') || '—')}</div>
+            <div><b>Ограничения:</b> ${escapeHtml(zone.restrictionLabels.join(', ') || '—')}</div>
+            <div><b>Флаги:</b> ${escapeHtml(Object.entries(zone.flags).filter(([,v]) => v).map(([k]) => k).join(', ') || '—')}</div>
+            <div><b>Ожидание клиента:</b> ${escapeHtml(zone.expectation || '—')}</div>
+            <div><b>Must have:</b> ${escapeHtml(zone.mustHave || '—')}</div>
+            <div><b>Nice to have:</b> ${escapeHtml(zone.niceToHave || '—')}</div>
+            <div><b>Контент:</b> ${escapeHtml(zone.contentStatusName)}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="previewCard">
+      <div style="font-weight:800;margin-bottom:8px">Краткое инженерное резюме</div>
+      <textarea readonly id="engineerSummaryText">${escapeHtml(pack.normalized.engineerSummary)}</textarea>
+    </div>
+
+    <div class="footerNote">JSON «для конфигуратора» уже собирается в близкой к v10 структуре: <b>fields</b> + <b>zones</b> + <b>flags</b> + <b>estimate[]</b>. Это упрощает будущий import в основной конфигуратор.</div>
+  `;
+}
+function refreshZoneMeta(pack){
+  const byId = new Map(pack.normalized.normalizedZones.map(zone => [zone.id, zone]));
+  state.zones.forEach(zone => {
+    const node = document.querySelector(`[data-zone-meta="${zone.id}"]`);
+    if(node){
+      const normalized = byId.get(zone.id);
+      node.innerHTML = normalized ? zoneMetaHtml(normalized) : '';
+    }
+  });
+}
+function saveLocal(manual = false, pack = null){
+  const payload = JSON.stringify(pack || buildBriefPackage());
+  localStorage.setItem(APP_STORAGE_KEY, payload);
+  if(manual) showStatus('Черновик сохранён локально в браузере.', 'ok');
+}
+function loadLocal(){
+  const raw = localStorage.getItem(APP_STORAGE_KEY);
+  if(!raw){
+    showStatus('Сохранённый черновик не найден.', 'warn');
+    return;
+  }
+  try{
+    hydrateFromData(JSON.parse(raw));
+    showStatus('Черновик загружен.', 'ok');
+  }catch(error){
+    console.error(error);
+    showStatus('Не удалось загрузить черновик.', 'warn');
+  }
+}
+function scheduleAutosave(pack){
+  clearTimeout(autosaveTimer);
+  autosaveTimer = setTimeout(() => saveLocal(false, pack), 350);
+}
+function refreshDerivedViews(){
+  const pack = buildBriefPackage();
+  renderPreview(pack);
+  refreshZoneMeta(pack);
+  scheduleAutosave(pack);
+}
+function hydrateFromData(data){
+  const source = data.project && Array.isArray(data.zones)
+    ? data
+    : data.brief && data.brief.project && Array.isArray(data.brief.zones)
+      ? data.brief
+      : null;
+  if(!source) throw new Error('Неподдерживаемый формат JSON');
+  fillProjectForm(source.project || {});
+  state.zones = (source.zones || []).map(zone => makeZone(zone));
+  if(!state.zones.length) state.zones = [makeZone({name:'Зона 1'})];
+  syncZoneCounter();
+  renderZones();
+  refreshDerivedViews();
+}
+function exportBriefJson(){
+  const pack = buildBriefPackage();
+  const filename = sanitizeFileName(pack.project.projectName || 'brief');
+  downloadBinary(`${filename}_brief.json`, JSON.stringify(pack, null, 2), 'application/json;charset=utf-8');
+  showStatus('JSON брифа скачан.', 'ok');
+}
+function exportConfiguratorJson(){
+  const pack = buildBriefPackage();
+  const filename = sanitizeFileName(pack.project.projectName || 'brief');
+  downloadBinary(`${filename}_configurator.json`, JSON.stringify(pack.normalized.configurator, null, 2), 'application/json;charset=utf-8');
+  showStatus('JSON для конфигуратора скачан.', 'ok');
+}
+async function exportExcel(){
+  const pack = buildBriefPackage();
+  if(typeof ExcelJS === 'undefined'){
+    showStatus('ExcelJS не загрузился. JSON-выгрузка доступна, а для Excel нужен интернет к CDN.', 'warn');
+    return;
+  }
+
+  const wb = new ExcelJS.Workbook();
+  wb.creator = 'OpenAI';
+  wb.lastModifiedBy = 'VIZHU Account Brief';
+  wb.created = new Date();
+  wb.modified = new Date();
+  wb.calcProperties = {fullCalcOnLoad:true};
+
+  const logoBase64 = typeof VIZHU_LOGO === 'string' && VIZHU_LOGO
+    ? (VIZHU_LOGO.startsWith('data:') ? VIZHU_LOGO : `data:image/png;base64,${VIZHU_LOGO}`)
+    : null;
+  let logoId = null;
+  try{
+    if(logoBase64) logoId = wb.addImage({base64: logoBase64, extension:'png'});
+  }catch(error){
+    console.warn('Не удалось добавить логотип в Excel:', error);
+    logoId = null;
+  }
+
+  const palette = {
+    brand:'FFD7FF7F',
+    brandSoft:'FFF5FAD9',
+    panel:'FFF7F9F4',
+    panelAlt:'FFF1F4EB',
+    white:'FFFFFFFF',
+    text:'FF111111',
+    muted:'FF5F6B5B',
+    border:'FFD9DFD0',
+    warn:'FFFFF3CC',
+    danger:'FFFFE8DE',
+    ok:'FFE7F4EC',
+    info:'FFEAF0F7',
+    dark:'FF2A3428'
+  };
+  const fill = argb => ({type:'pattern', pattern:'solid', fgColor:{argb}});
+  const border = {
+    top:{style:'thin', color:{argb:palette.border}},
+    left:{style:'thin', color:{argb:palette.border}},
+    bottom:{style:'thin', color:{argb:palette.border}},
+    right:{style:'thin', color:{argb:palette.border}}
+  };
+  const align = {
+    topLeft:{vertical:'top', horizontal:'left', wrapText:true},
+    middleLeft:{vertical:'middle', horizontal:'left', wrapText:true},
+    center:{vertical:'middle', horizontal:'center', wrapText:true}
+  };
+  const fonts = {
+    body:{name:'Arial', size:10, color:{argb:palette.text}},
+    small:{name:'Arial', size:9, color:{argb:palette.muted}},
+    label:{name:'Arial', size:10, bold:true, color:{argb:palette.text}},
+    header:{name:'Arial', size:10, bold:true, color:{argb:palette.text}},
+    title:{name:'Arial', size:20, bold:true, color:{argb:palette.text}},
+    sheet:{name:'Arial', size:16, bold:true, color:{argb:palette.text}},
+    kpi:{name:'Arial', size:16, bold:true, color:{argb:palette.text}},
+    big:{name:'Arial', size:13, bold:true, color:{argb:palette.text}},
+    mono:{name:'Consolas', size:9, color:{argb:palette.text}}
+  };
+
+  const project = pack.project;
+  const exportedAt = new Date(pack.meta.exportedAt).toLocaleString('ru-RU');
+  const budget = num(project.targetBudget) || null;
+  const totalArea = num(project.projectArea) || projectAreaFromZones(pack.zones) || null;
+  const ceiling = num(project.ceilingHeight) || null;
+  const floors = Math.max(1, num(project.floors) || 1);
+  const drivers = project.decisionDrivers.map(id => labelById(DRIVER_OPTIONS, id, id)).join(', ') || '—';
+  const integrations = project.integrations.map(id => labelById(INTEGRATION_OPTIONS, id, id)).join(', ') || '—';
+  const locationText = [project.objectCity, project.objectAddress].filter(Boolean).join(' · ') || '—';
+  const serviceSummary = [
+    `Доставка: ${labelById(TRI_STATE, project.serviceDelivery, project.serviceDelivery)}`,
+    `Монтаж: ${labelById(TRI_STATE, project.serviceInstall, project.serviceInstall)}`,
+    `ПНР: ${labelById(TRI_STATE, project.servicePnr, project.servicePnr)}`,
+    `Контент: ${labelById(TRI_STATE, project.serviceContent, project.serviceContent)}`,
+    `Металл: ${labelById(TRI_STATE, project.serviceMetal, project.serviceMetal)}`
+  ].join(' · ');
+  const globalFlagsSummary = Object.entries(pack.normalized.globalFlags).map(([key, value]) => `${key}: ${value ? 'да' : 'нет'}`).join(' · ') || '—';
+
+  function colToNumber(label){
+    return String(label || '').toUpperCase().split('').reduce((sum, char) => sum * 26 + (char.charCodeAt(0) - 64), 0);
+  }
+  function excelCol(index){
+    let n = index;
+    let out = '';
+    while(n > 0){
+      const mod = (n - 1) % 26;
+      out = String.fromCharCode(65 + mod) + out;
+      n = Math.floor((n - 1) / 26);
+    }
+    return out;
+  }
+  function decodeRef(ref){
+    const match = String(ref).match(/^([A-Z]+)(\d+)$/i);
+    return {col: colToNumber(match[1]), row: Number(match[2])};
+  }
+  function styleCell(cell, opts={}){
+    cell.font = opts.font || fonts.body;
+    if(opts.fill) cell.fill = opts.fill;
+    if(opts.border) cell.border = opts.border;
+    if(opts.alignment) cell.alignment = opts.alignment;
+    if(opts.numFmt) cell.numFmt = opts.numFmt;
+  }
+  function eachCellInRange(ws, range, handler){
+    const [startRef, endRef = startRef] = range.split(':');
+    const start = decodeRef(startRef);
+    const end = decodeRef(endRef);
+    for(let row = start.row; row <= end.row; row += 1){
+      for(let col = start.col; col <= end.col; col += 1){
+        handler(ws.getCell(row, col), row, col);
+      }
+    }
+  }
+  function applyRectStyle(ws, range, opts={}){
+    eachCellInRange(ws, range, cell => {
+      if(opts.fill) cell.fill = opts.fill;
+      if(opts.border) cell.border = opts.border;
+      if(opts.alignment) cell.alignment = opts.alignment;
+      if(opts.font) cell.font = opts.font;
+      if(opts.numFmt) cell.numFmt = opts.numFmt;
+    });
+  }
+  function mergeValue(ws, range, value, opts={}){
+    const [startRef, endRef = startRef] = range.split(':');
+    const start = decodeRef(startRef);
+    const end = decodeRef(endRef);
+    const isMulti = start.row !== end.row || start.col !== end.col;
+    if(opts.fill || opts.border) applyRectStyle(ws, range, {fill:opts.fill, border:opts.border});
+    if(isMulti) ws.mergeCells(range);
+    const master = ws.getCell(startRef);
+    master.value = value == null || value === '' ? '—' : value;
+    styleCell(master, {
+      font: opts.font || fonts.body,
+      fill: opts.fill,
+      border: opts.border,
+      alignment: opts.alignment || align.topLeft,
+      numFmt: typeof value === 'number' ? opts.numFmt : undefined
+    });
+    return master;
+  }
+  function setRowHeights(ws, from, to, height){
+    for(let row = from; row <= to; row += 1) ws.getRow(row).height = height;
+  }
+  function addLogo(ws, range){
+    if(!logoId) return;
+    try{
+      ws.addImage(logoId, range);
+    }catch(error){
+      console.warn('Не удалось поставить логотип на лист:', ws.name, error);
+    }
+  }
+  function setupSheet(ws, freezeRow=0){
+    ws.properties.defaultRowHeight = 20;
+    ws.views = [freezeRow ? {state:'frozen', ySplit:freezeRow, showGridLines:false} : {showGridLines:false}];
+    ws.pageSetup = {orientation:'landscape', fitToPage:true, fitToWidth:1, fitToHeight:0};
+  }
+  function addTitleBlock(ws, title, subtitle, lastColLetter, options={}){
+    const startCol = options.withLogo ? 'D' : 'A';
+    if(options.withLogo) addLogo(ws, options.logoRange || 'A1:C3');
+    mergeValue(ws, `${startCol}1:${lastColLetter}2`, title, {font: fonts.sheet, alignment:align.middleLeft});
+    mergeValue(ws, `${startCol}3:${lastColLetter}3`, subtitle, {font: fonts.small, alignment:align.middleLeft});
+    ws.getRow(1).height = 22;
+    ws.getRow(2).height = 22;
+    ws.getRow(3).height = 18;
+  }
+  function sectionTitle(ws, range, text, fillColor=palette.brandSoft){
+    mergeValue(ws, range, text, {font: fonts.header, fill: fill(fillColor), border, alignment:align.middleLeft});
+  }
+  function infoPair(ws, labelRef, valueRange, label, value, options={}){
+    mergeValue(ws, labelRef, label, {font: fonts.label, fill: fill(options.labelFill || palette.panelAlt), border, alignment:align.middleLeft});
+    mergeValue(ws, valueRange, value, {font: options.font || fonts.body, fill: fill(options.valueFill || palette.white), border, alignment: options.alignment || align.topLeft, numFmt: options.numFmt});
+  }
+  function addKpiCard(ws, labelRange, valueRange, label, value, options={}){
+    mergeValue(ws, labelRange, label, {font: fonts.label, fill: fill(options.labelFill || palette.panelAlt), border, alignment:align.middleLeft});
+    mergeValue(ws, valueRange, value, {font: options.font || fonts.kpi, fill: fill(options.valueFill || palette.panel), border, alignment: options.alignment || align.center, numFmt: options.numFmt});
+  }
+  function addTableHeader(ws, rowNumber, values, color=palette.brand){
+    const row = ws.getRow(rowNumber);
+    row.values = values;
+    row.height = 24;
+    row.eachCell(cell => styleCell(cell, {font: fonts.header, fill: fill(color), border, alignment:align.center}));
+    ws.autoFilter = {from:{row:rowNumber, column:1}, to:{row:rowNumber, column:values.length}};
+  }
+  function decorateRow(row, index, opts={}){
+    const rowFill = fill(index % 2 === 0 ? (opts.evenColor || palette.white) : (opts.oddColor || palette.panel));
+    row.height = opts.height || row.height || 24;
+    row.eachCell(cell => {
+      cell.fill = rowFill;
+      cell.font = opts.font || fonts.body;
+      cell.border = border;
+      cell.alignment = opts.alignment || align.topLeft;
+    });
+  }
+  function classifyQuestion(text){
+    const t = String(text || '').toLowerCase();
+    if(t.includes('зона')) return 'Зоны';
+    if(t.includes('бюджет')) return 'Бюджет';
+    if(t.includes('контент')) return 'Контент';
+    if(t.includes('адрес') || t.includes('город') || t.includes('объект')) return 'Локация';
+    if(t.includes('дата') || t.includes('срок') || t.includes('запуска')) return 'Сроки';
+    if(t.includes('бренд')) return 'Бренды';
+    if(t.includes('vc') || t.includes('teams') || t.includes('zoom')) return 'Платформа';
+    return 'Паспорт';
+  }
+  function classifyAssumption(text){
+    const t = String(text || '').toLowerCase();
+    if(t.includes('монтаж')) return 'Монтаж';
+    if(t.includes('пнр')) return 'ПНР';
+    if(t.includes('достав')) return 'Доставка';
+    if(t.includes('контент')) return 'Контент';
+    if(t.includes('металл')) return 'Конструкции';
+    if(t.includes('площад')) return 'Площадь';
+    if(t.includes('потол')) return 'Габариты';
+    return 'Общее';
+  }
+  function fieldDisplayValue(key, value){
+    if(value === null || value === undefined || value === '') return '—';
+    if(key === 'projectType') return `${value} — ${labelById(PROJECT_TYPES, value, value)}`;
+    if(key === 'scenario') return `${value} — ${scenarioExportName(value)}`;
+    if(key === 'cityTier') return `${value} — ${cityTierName(value)}`;
+    if(key === 'urgency') return `${value} — ${urgencyName(value)}`;
+    if(typeof value === 'boolean') return value ? 'true' : 'false';
+    return typeof value === 'object' ? JSON.stringify(value) : value;
+  }
+  const fieldHints = {
+    projectName:'Название проекта в конфигураторе.',
+    customerName:'Имя заказчика.',
+    projectType:'ID типа объекта для логики библиотеки.',
+    scenario:'Стартовый сценарий подбора.',
+    cityTier:'Логистика / регион для коэффициентов.',
+    urgency:'Срочность проекта.',
+    calcMode:'Режим расчёта в основном конфигураторе.',
+    usdRate:'Курс USD для внутренних прайсов.',
+    projectArea:'Общая площадь проекта.',
+    ceilingHeight:'Высота потолков.',
+    floors:'Количество этажей.',
+    targetBudget:'Целевой бюджет клиента.',
+    marginPct:'Маржа по умолчанию.',
+    vatPct:'НДС по умолчанию.',
+    complexity:'Базовый коэффициент сложности.',
+    logistics:'Базовый коэффициент логистики.',
+    complexityAuto:'Автоматический режим коэффициента сложности.',
+    logisticsAuto:'Автоматический режим коэффициента логистики.',
+    projectNotes:'Склеенный комментарий: бриф, допущения, вопросы и инженерное резюме.',
+    searchInput:'Служебное UI-поле.',
+    categoryFilter:'Служебное UI-поле.',
+    libraryScenarioFilter:'Служебное UI-поле.',
+    zoneFilter:'Служебное UI-поле.'
+  };
+
+  const cover = wb.addWorksheet('00_Обложка');
+  cover.columns = [{width:4},{width:17},{width:17},{width:17},{width:17},{width:17},{width:17},{width:17},{width:17},{width:4}];
+  setupSheet(cover, 0);
+  addTitleBlock(cover, 'VIZHU — аккаунт-бриф для ИТО', 'Нетехнический бриф, нормализованный под инженерный пресейл и перенос в конфигуратор.', 'I', {withLogo:true, logoRange:'B1:C3'});
+  infoPair(cover, 'B5', 'C5:D6', 'Проект', project.projectName || 'Новый проект', {font: fonts.big, valueFill: palette.panel, alignment:align.middleLeft});
+  infoPair(cover, 'E5', 'F5:G6', 'Заказчик', project.customerName, {font: fonts.big, valueFill: palette.panel, alignment:align.middleLeft});
+  infoPair(cover, 'H5', 'I5:I6', 'Аккаунт', project.accountManager, {font: fonts.big, valueFill: palette.panel, alignment:align.middleLeft});
+  infoPair(cover, 'B8', 'C8:D8', 'Тип проекта', labelById(PROJECT_TYPES, project.projectType, project.projectType));
+  infoPair(cover, 'E8', 'F8:G8', 'Сценарий', scenarioExportName(project.scenario));
+  infoPair(cover, 'H8', 'I8:I8', 'Срочность', urgencyName(project.urgency));
+  infoPair(cover, 'B9', 'C9:D9', 'Логистика', cityTierName(project.cityTier));
+  infoPair(cover, 'E9', 'F9:G9', 'Выгружено', exportedAt);
+  infoPair(cover, 'H9', 'I9:I9', 'Контакт', project.customerContact);
+  addKpiCard(cover, 'B11:C11', 'B12:C14', 'Готовность брифа', `${pack.normalized.completeness}%`, {valueFill: palette.ok});
+  addKpiCard(cover, 'D11:E11', 'D12:E14', 'Зон для просчёта', pack.normalized.normalizedZones.length, {valueFill: palette.panel});
+  addKpiCard(cover, 'F11:G11', 'F12:G14', 'Открытые вопросы', pack.normalized.openQuestions.length, {valueFill: palette.warn});
+  addKpiCard(cover, 'H11:I11', 'H12:I14', 'Допущения', pack.normalized.assumptions.length, {valueFill: palette.info});
+  sectionTitle(cover, 'B16:I16', 'Сервисный контур и флаги проекта');
+  mergeValue(cover, 'B17:I18', serviceSummary, {font: fonts.body, fill: fill(palette.white), border, alignment:align.topLeft});
+  mergeValue(cover, 'B19:I20', globalFlagsSummary, {font: fonts.body, fill: fill(palette.panel), border, alignment:align.topLeft});
+  sectionTitle(cover, 'B22:I22', 'Что лежит внутри Excel');
+  mergeValue(cover, 'B23:I23', '01_Сводка — проектный паспорт и инженерное резюме.', {font: fonts.body, fill: fill(palette.white), border, alignment:align.middleLeft});
+  mergeValue(cover, 'B24:I24', '02_Открытые_вопросы — всё, что ещё нужно уточнить.', {font: fonts.body, fill: fill(palette.panel), border, alignment:align.middleLeft});
+  mergeValue(cover, 'B25:I25', '03_Допущения — что принято по умолчанию до уточнений.', {font: fonts.body, fill: fill(palette.white), border, alignment:align.middleLeft});
+  mergeValue(cover, 'B26:I26', '04_Зоны_для_ИТО — нормализованные зоны для просчёта.', {font: fonts.body, fill: fill(palette.panel), border, alignment:align.middleLeft});
+  mergeValue(cover, 'B27:I27', '05–07 — snapshot полей и зон под конфигуратор + JSON.', {font: fonts.body, fill: fill(palette.white), border, alignment:align.middleLeft});
+  sectionTitle(cover, 'B29:I29', 'Инженерное резюме');
+  mergeValue(cover, 'B30:I36', pack.normalized.engineerSummary || '—', {font: fonts.body, fill: fill(palette.white), border, alignment:align.topLeft});
+  mergeValue(cover, 'B38:I38', `Версия формы: ${pack.meta.version} · экспорт: ${exportedAt}`, {font: fonts.small, alignment:align.middleLeft});
+  setRowHeights(cover, 17, 20, 24);
+  setRowHeights(cover, 30, 36, 22);
+
+  const summary = wb.addWorksheet('01_Сводка');
+  summary.columns = [{width:18},{width:14},{width:14},{width:14},{width:14},{width:14},{width:18},{width:14},{width:14},{width:14},{width:14},{width:14}];
+  setupSheet(summary, 6);
+  addTitleBlock(summary, 'Проектный паспорт', 'Сводка в формате для ИТО и дальнейшего расчёта в конфигураторе.', 'L');
+  sectionTitle(summary, 'A5:L5', 'Паспорт проекта');
+  infoPair(summary, 'A6', 'B6:F6', 'Проект', project.projectName || 'Новый проект', {font: fonts.big, valueFill: palette.panel, alignment:align.middleLeft});
+  infoPair(summary, 'G6', 'H6:L6', 'Заказчик', project.customerName, {font: fonts.big, valueFill: palette.panel, alignment:align.middleLeft});
+  infoPair(summary, 'A7', 'B7:F7', 'Тип проекта', labelById(PROJECT_TYPES, project.projectType, project.projectType));
+  infoPair(summary, 'G7', 'H7:L7', 'Сценарий', scenarioExportName(project.scenario));
+  infoPair(summary, 'A8', 'B8:F8', 'Локация', locationText);
+  infoPair(summary, 'G8', 'H8:L8', 'Контакт', project.customerContact);
+  infoPair(summary, 'A9', 'B9:F9', 'ЛПР / согласующие', project.decisionMaker);
+  infoPair(summary, 'G9', 'H9:L9', 'Срок / срочность', [project.deadline || 'дата не указана', urgencyName(project.urgency)].filter(Boolean).join(' · '));
+  infoPair(summary, 'A10', 'B10:F10', 'Приоритеты клиента', drivers);
+  infoPair(summary, 'G10', 'H10:L10', 'Интеграции', integrations);
+  infoPair(summary, 'A11', 'B11:F11', 'Площадь / высота / этажи', [totalArea ? `${totalArea} м²` : '', ceiling ? `${ceiling} м` : '', `${floors} эт.`].filter(Boolean).join(' · '));
+  infoPair(summary, 'G11', 'H11:L11', 'Бюджет клиента', budget || 'Не задан', budget ? {numFmt:'#,##0 [$₽-419]'} : {});
+  addKpiCard(summary, 'A13:C13', 'A14:C15', 'Готовность', `${pack.normalized.completeness}%`, {valueFill: palette.ok});
+  addKpiCard(summary, 'D13:F13', 'D14:F15', 'Зоны', pack.normalized.normalizedZones.length, {valueFill: palette.panel});
+  addKpiCard(summary, 'G13:I13', 'G14:I15', 'Открытые вопросы', pack.normalized.openQuestions.length, {valueFill: palette.warn});
+  addKpiCard(summary, 'J13:L13', 'J14:L15', 'Допущения', pack.normalized.assumptions.length, {valueFill: palette.info});
+  sectionTitle(summary, 'A17:L17', 'Бизнес-контекст');
+  infoPair(summary, 'A18', 'C18:L19', 'Бизнес-цель', project.businessGoal);
+  infoPair(summary, 'A20', 'C20:L21', 'Критерий успеха', project.successCriteria);
+  infoPair(summary, 'A22', 'C22:L23', 'Что уже есть', project.existingEquipment);
+  infoPair(summary, 'A24', 'C24:L24', 'Предпочтения по брендам', project.brandPreferences);
+  infoPair(summary, 'A25', 'C25:L25', 'Ограничения по брендам', project.forbiddenBrands);
+  infoPair(summary, 'A26', 'C26:L27', 'Комментарий аккаунта', project.projectNotes);
+  sectionTitle(summary, 'A29:L29', 'Сервисы и организационные вводные');
+  infoPair(summary, 'A30', 'C30:L31', 'Сервисный контур', serviceSummary);
+  infoPair(summary, 'A32', 'C32:L32', 'Глобальные флаги', globalFlagsSummary);
+  infoPair(summary, 'A33', 'C33:L33', 'Город / адрес', locationText);
+  infoPair(summary, 'A34', 'C34:L34', 'Дата выгрузки', exportedAt);
+  sectionTitle(summary, 'A36:L36', 'Инженерное резюме');
+  mergeValue(summary, 'A37:L42', pack.normalized.engineerSummary || '—', {font: fonts.body, fill: fill(palette.white), border, alignment:align.topLeft});
+  sectionTitle(summary, 'A44:L44', 'Навигация по файлу');
+  mergeValue(summary, 'A45:L47', 'Открытые вопросы вынесены на лист 02, допущения — на лист 03, нормализованные зоны — на лист 04. Листы 05–07 нужны для прямой передачи в ИТО и переноса в основной конфигуратор.', {font: fonts.body, fill: fill(palette.panel), border, alignment:align.topLeft});
+
+  const questionsWs = wb.addWorksheet('02_Открытые_вопросы');
+  questionsWs.columns = [{width:6},{width:18},{width:96}];
+  setupSheet(questionsWs, 7);
+  addTitleBlock(questionsWs, 'Открытые вопросы', 'Что нужно уточнить до точного инженерного расчёта.', 'C');
+  mergeValue(questionsWs, 'A5:C5', 'Чем больше строк ниже, тем выше риск неточного пресейла или дополнительных работ на позднем этапе.', {font: fonts.body, fill: fill(palette.warn), border, alignment:align.middleLeft});
+  addTableHeader(questionsWs, 7, ['№','Категория','Вопрос']);
+  const questionRows = pack.normalized.openQuestions.length ? pack.normalized.openQuestions : ['Открытых вопросов нет.'];
+  questionRows.forEach((text, index) => {
+    const row = questionsWs.addRow([index + 1, classifyQuestion(text), text]);
+    decorateRow(row, index, {height:26});
+  });
+
+  const assumptionsWs = wb.addWorksheet('03_Допущения');
+  assumptionsWs.columns = [{width:6},{width:18},{width:96}];
+  setupSheet(assumptionsWs, 7);
+  addTitleBlock(assumptionsWs, 'Допущения', 'Что принято по умолчанию до уточнения от заказчика.', 'C');
+  mergeValue(assumptionsWs, 'A5:C5', 'Допущения нужно проверить перед выпуском детальной сметы или коммерческого предложения.', {font: fonts.body, fill: fill(palette.info), border, alignment:align.middleLeft});
+  addTableHeader(assumptionsWs, 7, ['№','Категория','Допущение']);
+  const assumptionRows = pack.normalized.assumptions.length ? pack.normalized.assumptions : ['Допущений нет.'];
+  assumptionRows.forEach((text, index) => {
+    const row = assumptionsWs.addRow([index + 1, classifyAssumption(text), text]);
+    decorateRow(row, index, {height:26});
+  });
+
+  const zonesWs = wb.addWorksheet('04_Зоны_для_ИТО');
+  zonesWs.columns = [
+    {width:6},{width:22},{width:18},{width:18},{width:10},{width:10},{width:14},{width:20},{width:20},{width:14},{width:18},{width:18},{width:18},{width:20},{width:18},{width:16},{width:10}
+  ];
+  setupSheet(zonesWs, 9);
+  addTitleBlock(zonesWs, 'Зоны для ИТО', 'Нормализованные зоны и ожидания заказчика для быстрого технического просчёта.', 'Q');
+  mergeValue(zonesWs, 'A5:Q5', `${project.projectName || 'Новый проект'} · ${project.customerName || 'заказчик не указан'} · ${scenarioExportName(project.scenario)} · ${cityTierName(project.cityTier)}`, {font: fonts.body, fill: fill(palette.panel), border, alignment:align.middleLeft});
+  mergeValue(zonesWs, 'A6:Q6', `Флаги проекта: ${globalFlagsSummary}`, {font: fonts.body, fill: fill(palette.white), border, alignment:align.middleLeft});
+  mergeValue(zonesWs, 'A7:Q7', `Приоритеты клиента: ${drivers}`, {font: fonts.body, fill: fill(palette.panel), border, alignment:align.middleLeft});
+  addTableHeader(zonesWs, 9, ['№','Зона','Тип зоны','Главная задача','Площадь, м²','Люди','Сценарий','Потребности','Ограничения','Статус контента','Must have','Nice to have','Что уже есть','Ожидание клиента','Комментарий','Флаги','Scale']);
+  pack.normalized.normalizedZones.forEach((zone, index) => {
+    const row = zonesWs.addRow([
+      index + 1,
+      zone.name,
+      zone.purposeName,
+      zone.primaryTaskName,
+      zone.area,
+      zone.capacity,
+      zone.scenarioName,
+      zone.needLabels.join(', '),
+      zone.restrictionLabels.join(', '),
+      zone.contentStatusName,
+      zone.mustHave,
+      zone.niceToHave,
+      zone.existingEquipment,
+      zone.expectation,
+      zone.notes,
+      Object.entries(zone.flags).filter(([, value]) => value).map(([key]) => key).join(', '),
+      zone.installationScale
+    ]);
+    decorateRow(row, index, {height:40});
+    row.getCell(5).numFmt = '0';
+    row.getCell(6).numFmt = '0';
+    row.getCell(17).alignment = align.center;
+    if(zone.installationScale === 'large') row.getCell(17).fill = fill(palette.warn);
+    if(zone.installationScale === 'medium') row.getCell(17).fill = fill(palette.info);
+    if(zone.installationScale === 'small') row.getCell(17).fill = fill(palette.ok);
+  });
+
+  const fieldsWs = wb.addWorksheet('05_Конфигуратор_fields');
+  fieldsWs.columns = [{width:28},{width:36},{width:62}];
+  setupSheet(fieldsWs, 7);
+  addTitleBlock(fieldsWs, 'Поля под конфигуратор', 'Snapshot project-level полей для переноса в основной configurator.', 'C');
+  mergeValue(fieldsWs, 'A5:C5', `Версия snapshot: ${pack.normalized.configurator.version} · pricingBase: ${pack.normalized.configurator.pricingBase}`, {font: fonts.body, fill: fill(palette.panel), border, alignment:align.middleLeft});
+  addTableHeader(fieldsWs, 7, ['Поле configurator','Значение','Комментарий']);
+  Object.entries(pack.normalized.configurator.fields).forEach(([key, value], index) => {
+    const row = fieldsWs.addRow([key, fieldDisplayValue(key, value), fieldHints[key] || '']);
+    decorateRow(row, index, {height:26});
+  });
+
+  const cfgZonesWs = wb.addWorksheet('06_Конфигуратор_zones');
+  cfgZonesWs.columns = [
+    {width:10},{width:22},{width:16},{width:18},{width:10},{width:10},{width:16},{width:18},{width:16},{width:18},{width:12},{width:16},{width:10},{width:10},{width:10},{width:10},{width:10}
+  ];
+  setupSheet(cfgZonesWs, 7);
+  addTitleBlock(cfgZonesWs, 'Зоны под конфигуратор', 'Raw-formatted zones для handoff в основной файл конфигуратора.', 'Q');
+  mergeValue(cfgZonesWs, 'A5:Q5', `Всего зон в snapshot: ${pack.normalized.configurator.zones.length}`, {font: fonts.body, fill: fill(palette.panel), border, alignment:align.middleLeft});
+  addTableHeader(cfgZonesWs, 7, ['id','name','purpose_raw','purpose_label','area','capacity','primaryTask_raw','task_label','scenario_raw','scenario_label','installScale','installationGroup','delivery','install','pnr','content','metal']);
+  pack.normalized.configurator.zones.forEach((zone, index) => {
+    const row = cfgZonesWs.addRow([
+      zone.id,
+      zone.name,
+      zone.purpose,
+      purposeName(zone.purpose),
+      zone.area,
+      zone.capacity,
+      zone.primaryTask,
+      taskName(zone.primaryTask),
+      zone.scenario,
+      scenarioExportName(zone.scenario),
+      zone.installationScale,
+      zone.installationGroup,
+      zone.flags.delivery ? 1 : 0,
+      zone.flags.install ? 1 : 0,
+      zone.flags.pnr ? 1 : 0,
+      zone.flags.content ? 1 : 0,
+      zone.flags.metal ? 1 : 0
+    ]);
+    decorateRow(row, index, {height:24});
+    row.getCell(5).numFmt = '0';
+    row.getCell(6).numFmt = '0';
+    for(let idx = 13; idx <= 17; idx += 1) row.getCell(idx).alignment = align.center;
+  });
+
+  const rawWs = wb.addWorksheet('07_JSON_snapshot');
+  rawWs.columns = [{width:6},{width:4},{width:118}];
+  setupSheet(rawWs, 7);
+  addTitleBlock(rawWs, 'JSON snapshot', 'Полный configurator snapshot для передачи или импорта.', 'C');
+  mergeValue(rawWs, 'A5:C5', 'Этот же snapshot можно скачать отдельным JSON-файлом кнопкой «Скачать JSON для конфигуратора».', {font: fonts.body, fill: fill(palette.panel), border, alignment:align.middleLeft});
+  addTableHeader(rawWs, 7, ['№','','JSON']);
+  const rawLines = JSON.stringify(pack.normalized.configurator, null, 2).split('\n');
+  rawLines.forEach((line, index) => {
+    const row = rawWs.addRow([index + 1, '', line]);
+    decorateRow(row, index, {height:20});
+    row.getCell(1).alignment = align.center;
+    row.getCell(3).font = fonts.mono;
+    row.getCell(3).alignment = align.middleLeft;
+  });
+
+  [cover, summary, questionsWs, assumptionsWs, zonesWs, fieldsWs, cfgZonesWs, rawWs].forEach(ws => {
+    ws.eachRow({includeEmpty:false}, row => {
+      row.eachCell({includeEmpty:false}, cell => {
+        if(!cell.font) cell.font = fonts.body;
+        if(!cell.alignment) cell.alignment = align.topLeft;
+      });
+    });
+  });
+
+  const filename = sanitizeFileName(project.projectName || 'brief');
+  const buffer = await wb.xlsx.writeBuffer();
+  downloadBinary(`${filename}_brief.xlsx`, buffer, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+  showStatus('Excel выгружен в исправленном и выровненном шаблоне.', 'ok');
+}
+function copyEngineerSummary(){
+  const pack = buildBriefPackage();
+  const text = pack.normalized.engineerSummary;
+  navigator.clipboard.writeText(text).then(() => {
+    showStatus('Инженерное резюме скопировано в буфер.', 'ok');
+  }).catch(() => {
+    showStatus('Не удалось скопировать автоматически. Текст виден в блоке справа.', 'warn');
+  });
+}
+function handleJsonImport(file){
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = event => {
+    try{
+      const data = JSON.parse(String(event.target.result || '{}'));
+      hydrateFromData(data);
+      showStatus('JSON успешно загружен.', 'ok');
+    }catch(error){
+      console.error(error);
+      showStatus('Не удалось прочитать JSON. Ожидается сохранённый бриф.', 'warn');
+    }
+  };
+  reader.readAsText(file, 'utf-8');
+}
+function bindProjectEvents(){
+  document.querySelectorAll('input,select,textarea').forEach(node => {
+    if(node.closest('[data-zone-card]')) return;
+    if(node.id === 'importJsonInput') return;
+    node.addEventListener('input', refreshDerivedViews);
+    node.addEventListener('change', refreshDerivedViews);
+  });
+  document.body.addEventListener('input', event => {
+    const zoneId = event.target.dataset.zoneId;
+    const key = event.target.dataset.key;
+    if(zoneId && key){
+      updateZoneValue(zoneId, key, event.target.value);
+      refreshDerivedViews();
+    }
+  });
+  document.body.addEventListener('change', event => {
+    const zoneId = event.target.dataset.zoneId;
+    const arrayKey = event.target.dataset.array;
+    if(zoneId && arrayKey){
+      toggleZoneArray(zoneId, arrayKey, event.target.value, event.target.checked);
+      refreshDerivedViews();
+    }
+    if(event.target.dataset.removeZone){
+      removeZone(event.target.dataset.removeZone);
+    }
+  });
+  document.body.addEventListener('click', event => {
+    const zoneId = event.target.dataset.removeZone;
+    if(zoneId){
+      removeZone(zoneId);
+    }
+  });
+  el('addZoneBtn').addEventListener('click', () => addZone());
+  el('defaultsBtn').addEventListener('click', applyDefaultZones);
+  el('saveLocalBtn').addEventListener('click', () => saveLocal(true));
+  el('loadLocalBtn').addEventListener('click', loadLocal);
+  el('importJsonBtn').addEventListener('click', () => el('importJsonInput').click());
+  el('importJsonInput').addEventListener('change', event => handleJsonImport(event.target.files[0]));
+  el('exportBriefJsonBtn').addEventListener('click', exportBriefJson);
+  el('exportConfiguratorJsonBtn').addEventListener('click', exportConfiguratorJson);
+  el('exportExcelBtn').addEventListener('click', exportExcel);
+  el('copySummaryBtn').addEventListener('click', copyEngineerSummary);
+}
+function bootstrap(){
+  if(el('heroLogoImg')) el('heroLogoImg').src = 'data:image/png;base64,' + VIZHU_LOGO;
+  populateSelect('projectType', PROJECT_TYPES, {defaultValue:'education'});
+  populateSelect('scenario', SCENARIOS, {defaultValue:'base'});
+  populateSelect('cityTier', CITY_TIERS, {defaultValue:'moscow'});
+  populateSelect('urgency', URGENCY, {defaultValue:'normal'});
+  populateSelect('serviceDelivery', TRI_STATE, {defaultValue:'yes'});
+  populateSelect('serviceInstall', TRI_STATE, {defaultValue:'yes'});
+  populateSelect('servicePnr', TRI_STATE, {defaultValue:'yes'});
+  populateSelect('serviceContent', TRI_STATE, {defaultValue:'unknown'});
+  populateSelect('serviceMetal', TRI_STATE, {defaultValue:'unknown'});
+  renderCheckGroup('decisionDriversGroup', 'decisionDrivers', DRIVER_OPTIONS);
+  renderCheckGroup('integrationsGroup', 'integrations', INTEGRATION_OPTIONS);
+  fillProjectForm(defaultProjectValues());
+  state.zones = [makeZone({name:'Зона 1'})];
+  syncZoneCounter();
+  renderZones();
+  bindProjectEvents();
+  const raw = localStorage.getItem(APP_STORAGE_KEY);
+  if(raw){
+    try{
+      hydrateFromData(JSON.parse(raw));
+      showStatus('Восстановлен последний локальный черновик.', 'ok');
+      return;
+    }catch(error){
+      console.warn('restore failed', error);
+    }
+  }
+  refreshDerivedViews();
+}
+bootstrap();
+</script>
+</body>
+</html>
